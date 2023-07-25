@@ -3,18 +3,17 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
-  const [hello ,setHello] = useState(null);
+  const [token ,setToken] = useState(null);
 
   useEffect(() => {
-    fetch('/api')
-      .then(response => response.text())
-      .then(data => setHello(data));
-    });
+    fetch('/api/token')
+      .then(response => response.json())
+      .then(data => setToken(data.token));
+    }, []);
 
   return (
     <div className="App">
       <header className="App-header">
-        {hello && <h1>{hello}</h1>}
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
@@ -27,6 +26,7 @@ function App() {
         >
           Learn React
         </a>
+        {token && <p>{token}</p>}
       </header>
     </div>
   );

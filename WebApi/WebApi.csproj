@@ -4,6 +4,11 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>3c027c5b-30e0-43c3-a623-f6600303b1ee</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AppleDeveloperToken" Version="1.0.1" />
+  </ItemGroup>
 
 </Project>
