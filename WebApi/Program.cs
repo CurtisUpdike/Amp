@@ -6,9 +6,9 @@ builder.Services.AddSingleton<ITokenProvider, TokenProvider>();
 
 var app = builder.Build();
 
-app.MapGet("/api/token", Response (ITokenProvider tokenProvider) => new(tokenProvider.Token));
+app.MapGet("/api/developerToken", Response (ITokenProvider tokenProvider) => new(tokenProvider.Token));
 
 app.Run();
 
 
-internal record Response(string Token);
+internal record Response(string DeveloperToken);

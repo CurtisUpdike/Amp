@@ -1,16 +1,7 @@
-import { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  const [token ,setToken] = useState(null);
-
-  useEffect(() => {
-    fetch('/api/token')
-      .then(response => response.json())
-      .then(data => setToken(data.token));
-    }, []);
-
+function App({ music }) {
   return (
     <div className="App">
       <header className="App-header">
@@ -26,7 +17,7 @@ function App() {
         >
           Learn React
         </a>
-        {token && <p>{token}</p>}
+        <p>{music !== null ? "MusicKit has been configured!" : "Something went wrong with configuration :("}</p>
       </header>
     </div>
   );
