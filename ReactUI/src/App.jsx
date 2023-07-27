@@ -1,11 +1,13 @@
-import useMusicKit from "./hooks/useMusicKit";
+import LoginMessage from "./features/LogInMessage";
+import useAuth from "./hooks/useAuth";
+import { Container } from "semantic-ui-react";
 
 export default function App() {
-    const music = useMusicKit();
+    const auth = useAuth();
 
-    if (music === null) {
-        return <h1>Loading...</h1>;
-    }
-
-    return <div>MusicKit has been configured!</div>;
+    return (
+        <Container>
+            {!auth.isAuthorized && <LoginMessage login={auth.authorize} />}
+        </Container>
+    );
 }
