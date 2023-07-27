@@ -1,3 +1,11 @@
+import useMusicKit from "./hooks/useMusicKit";
+
 export default function App() {
-  return <h>Now using Vite!</h>;
+    const music = useMusicKit();
+
+    if (music === null) {
+        return <h1>Loading...</h1>;
+    }
+
+    return <div>MusicKit has been configured!</div>;
 }
