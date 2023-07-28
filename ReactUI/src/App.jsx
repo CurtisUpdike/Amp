@@ -1,31 +1,56 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { debounce } from "./Utils";
+import useAuth from "./hooks/useAuth";
+
+import { Container, Menu, Input } from "semantic-ui-react";
 import LoginMessage from "./features/LogInMessage";
 import Player from "./features/Player";
-import useAuth from "./hooks/useAuth";
-import { Container, Menu, Input } from "semantic-ui-react";
 import Home from "./pages/Home";
 import Queue from "./pages/Queue";
 import Search from "./pages/Search";
 
 export default function App() {
     const auth = useAuth();
-    const [activePanel, setActivePanel] = useState("home");
+    const [query, setQuery] = useState("");
+    const [activePage, setActivePage] = useState("home");
 
-    const handleItemClick = (e, { name }) => setActivePanel(name);
+    const handleSearchChange = useCallback(
+        debounce((e) => {
+            if (activePage != "search") setActivePage("search");
+            setQuery(e.target.value);
+        }),
+        [],
+    );
 
-    let panel;
-    switch (activePanel) {
-        case "home":
-            panel = <Home />;
-            break;
-        case "queue":
-            panel = <Queue />;
-            break;
-        case "search":
-            panel = <Search />;
-            break;
-        default:
-            panel = <Home />;
+    const pages = [
+        {
+            name: "home",
+            component: <Home />,
+        },
+        {
+            name: "queue",
+            component: <Queue />,
+        },
+        {
+            name: "search",
+            component: <Search />,
+        },
+    ];
+
+    const menuTabs = pages.map((p) => (
+        <Menu.Item
+            key={p.name}
+            name={p.name}
+            active={activePage === p.name}
+            onClick={() => setActivePage(p.name)}
+        />
+    ));
+
+    let currentPage;
+    if (activePage === "search") {
+        currentPage = <Search query={query} />;
+    } else {
+        currentPage = pages.find((p) => p.name === activePage).component;
     }
 
     return (
@@ -34,28 +59,18 @@ export default function App() {
             <Player />
             <div>
                 <Menu pointing>
-                    <Menu.Item
-                        name="home"
-                        active={activePanel === "home"}
-                        onClick={handleItemClick}
-                    />
-                    <Menu.Item
-                        name="queue"
-                        active={activePanel === "queue"}
-                        onClick={handleItemClick}
-                    />
-                    <Menu.Item
-                        name="search"
-                        active={activePanel === "search"}
-                        onClick={handleItemClick}
-                    />
+                    {menuTabs}
                     <Menu.Menu position="right">
                         <Menu.Item>
-                            <Input icon="search" placeholder="Search..." />
+                            <Input
+                                icon="search"
+                                placeholder="Search..."
+                                onChange={handleSearchChange}
+                            />
                         </Menu.Item>
                     </Menu.Menu>
                 </Menu>
-                {panel}
+                {currentPage}
             </div>
         </Container>
     );
