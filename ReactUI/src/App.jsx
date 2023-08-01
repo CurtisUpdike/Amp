@@ -9,7 +9,7 @@ import Home from "./pages/Home";
 import Playlist from "./pages/Playlist/Playlist";
 import Search from "./pages/Search";
 
-export default function App() {
+function App() {
     const auth = useAuth();
     const [query, setQuery] = useState("");
     const [activePage, setActivePage] = useState("home");
@@ -21,6 +21,12 @@ export default function App() {
         }),
         [],
     );
+
+    const handelSearchFocus = () => {
+        if (query.length > 0) {
+            setActivePage("search");
+        }
+    };
 
     const pages = [
         {
@@ -66,6 +72,7 @@ export default function App() {
                                 icon="search"
                                 placeholder="Search..."
                                 onChange={handleSearchChange}
+                                onFocus={handelSearchFocus}
                             />
                         </Menu.Item>
                     </Menu.Menu>
@@ -75,3 +82,5 @@ export default function App() {
         </Container>
     );
 }
+
+export default App;
