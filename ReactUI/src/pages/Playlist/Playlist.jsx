@@ -2,38 +2,34 @@ import { useEffect, useState } from "react";
 import { Segment, List, Button } from "semantic-ui-react";
 import PlaylistItem from "./PlaylistItem";
 
-function PlayList() {
+function Playlist() {
     const MusicKit = window.MusicKit;
     const music = MusicKit.getInstance();
     const [queue, setQueue] = useState(music.queue.items);
 
     useEffect(() => {
-        music.addEventListener("playbackStateDidChange", updateQueue);
         music.addEventListener("queueItemsDidChange", updateQueue);
         music.addEventListener("queuePositionDidChange", updateQueue);
 
         return () => {
-            music.removeEventListener("playbackStateDidChange", updateQueue);
             music.removeEventListener("queueItemsDidChange", updateQueue);
             music.removeEventListener("queuePositionDidChange", updateQueue);
         };
     });
 
-    const updateQueue = () => {
-        setQueue(music.queue.items);
-    };
+    const updateQueue = () => setQueue(music.queue.items);
 
     let content;
     if (queue.length > 0) {
-        content = queue.map(queueItemFromMediaItem).map((i, index) => (
+        content = queue.map((item, position) => (
             <PlaylistItem
-                key={i.id + index}
-                item={i}
+                key={position}
+                item={item}
                 remove={() => {
                     // TODO: queue.remove() is deprecated, but no alternative yet
-                    music.queue.remove(index);
+                    music.queue.remove(position);
                 }}
-                isNowPlaying={music.queue.currentItem.id === i.id}
+                isCurrentItem={position === music.queue.position}
             />
         ));
     } else {
@@ -71,32 +67,4 @@ function PlayList() {
     );
 }
 
-export default PlayList;
-
-function queueItemFromMediaItem(item) {
-    const {
-        // assetURL,
-        attributes: {
-            albumName,
-            artistName,
-            artwork,
-            durationInMillis,
-            // genreNames,
-            name,
-            // playParams,
-        },
-        id,
-        // playbackType,
-        // relationships,
-        // type,
-    } = item;
-
-    return {
-        albumName,
-        artistName,
-        artwork,
-        durationInMillis,
-        name,
-        id,
-    };
-}
+export default Playlist;

@@ -21,26 +21,26 @@ const textStyles = {
     wordWrap: "normal",
 };
 
-const PlaylistItem = ({ item, remove, isNowPlaying }) => (
+const PlaylistItem = ({ item, remove, isCurrentItem }) => (
     <List.Item key={item.id}>
         <Card fluid style={playlistItemStyles}>
             <div>
                 <img
                     alt=""
-                    src={formatArtworkURL(item.artwork, 60)}
+                    src={formatArtworkURL(item.attributes.artwork, 60)}
                     style={imgStyles}
                 ></img>
             </div>
-            <div style={textStyles}>{item.name}</div>
-            <div style={textStyles}>{item.artistName}</div>
-            <div style={textStyles}>{item.albumName}</div>
-            <div>{formatMilliseconds(item.durationInMillis)}</div>
+            <div style={textStyles}>{item.attributes.name}</div>
+            <div style={textStyles}>{item.attributes.artistName}</div>
+            <div style={textStyles}>{item.attributes.albumName}</div>
+            <div>{formatMilliseconds(item.attributes.durationInMillis)}</div>
             <Button
                 basic
                 icon="x"
                 onClick={remove}
                 title="Play next"
-                disabled={isNowPlaying}
+                disabled={isCurrentItem}
             />
         </Card>
     </List.Item>
