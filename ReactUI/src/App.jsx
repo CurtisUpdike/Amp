@@ -6,7 +6,7 @@ import { Container, Menu, Input } from "semantic-ui-react";
 import LoginMessage from "./features/LogInMessage";
 import Player from "./features/Player";
 import Home from "./pages/Home";
-import Queue from "./pages/Queue";
+import Playlist from "./pages/Playlist/Playlist";
 import Search from "./pages/Search";
 
 export default function App() {
@@ -28,8 +28,8 @@ export default function App() {
             component: <Home />,
         },
         {
-            name: "queue",
-            component: <Queue />,
+            name: "playlist",
+            component: <Playlist />,
         },
         {
             name: "search",
