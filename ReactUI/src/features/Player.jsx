@@ -1,24 +1,46 @@
+import { useEffect, useState } from "react";
 import Logo from "../components/Logo";
-import usePlayer from "../hooks/usePlayer";
 import { Button, Segment } from "semantic-ui-react";
 
 export default function Player() {
-    const player = usePlayer();
+    const MusicKit = window.MusicKit;
+    const music = MusicKit.getInstance();
+    const [playbackState, setPlaybackState] = useState(
+        MusicKit.PlaybackStates[music.playbackState],
+    );
 
-    let centerButton;
-    if (player.isPlaying) {
-        centerButton = <Button icon="pause" onClick={player.pause} />;
-    } else {
-        centerButton = <Button icon="play" onClick={player.play} />;
-    }
+    useEffect(() => {
+        music.addEventListener("playbackStateDidChange", updateState);
+
+        return () => {
+            music.removeEventListener("playbackStateDidChange", updateState);
+        };
+    });
+
+    const updateState = () => {
+        setPlaybackState(MusicKit.PlaybackStates[music.playbackState]);
+    };
+
+    const centerButton =
+        playbackState === "playing" ? (
+            <Button icon="pause" onClick={async () => await music.pause()} />
+        ) : (
+            <Button icon="play" onClick={async () => await music.play()} />
+        );
 
     return (
         <Segment padded>
             <Logo>AMP</Logo>
             <Button.Group>
-                <Button icon="backward" onClick={player.skipBackward} />
+                <Button
+                    icon="backward"
+                    onClick={async () => await music.skipToPreviousItem()}
+                />
                 {centerButton}
-                <Button icon="forward" onClick={player.skipForward} />
+                <Button
+                    icon="forward"
+                    onClick={async () => await music.skipToNextItem()}
+                />
             </Button.Group>
         </Segment>
     );

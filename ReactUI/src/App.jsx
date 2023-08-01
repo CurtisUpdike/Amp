@@ -39,7 +39,7 @@ function App() {
         },
         {
             name: "search",
-            component: <Search />,
+            component: <Search query={query} />,
         },
     ];
 
@@ -52,12 +52,7 @@ function App() {
         />
     ));
 
-    let currentPage;
-    if (activePage === "search") {
-        currentPage = <Search query={query} />;
-    } else {
-        currentPage = pages.find((p) => p.name === activePage).component;
-    }
+    const currentPage = pages.find((p) => p.name === activePage).component;
 
     return (
         <Container style={{ marginTop: "3em" }} text>
