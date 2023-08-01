@@ -25,54 +25,66 @@ const buttonStyles = {
 const renderDuration = (duration) => <div>{formatMilliseconds(duration)}</div>;
 
 export default function TrackList(props) {
+    const music = window.MusicKit.getInstance();
+
     const tracks = props.tracks || [];
 
-    function playNow() {
-        console.log("played");
-    }
+    const Track = (t) => {
+        async function playNow() {
+            await music.setQueue({ song: t.id, startPlaying: true });
+        }
 
-    function playNext() {
-        console.log("added to start of queue");
-    }
+        async function playNext() {
+            if (music.queue.isEmpty) {
+                playNow();
+            } else {
+                await music.playNext({ song: t.id });
+            }
+        }
 
-    function playLast() {
-        console.log("added to end of queue");
-    }
+        async function playLast() {
+            if (music.queue.isEmpty) {
+                playNow();
+            } else {
+                await music.playLater({ song: t.id });
+            }
+        }
 
-    const Track = (t) => (
-        <List.Item key={t.id}>
-            <Card fluid style={trackListStyles}>
-                <div className={styles.albumDislpay}>
-                    <img
-                        alt=""
-                        src={formatArtworkURL(t.attributes.artwork, 60)}
-                    ></img>
-                    <Button
-                        icon="play"
-                        style={buttonStyles}
-                        onClick={playNow}
-                        title="Play"
-                    />
-                </div>
-                <div style={textStyles}>{t.attributes.name}</div>
-                <div style={textStyles}>{t.attributes.artistName}</div>
-                <div style={textStyles}>{t.attributes.albumName}</div>
-                {renderDuration(t.attributes.durationInMillis)}
-                <Button.Group basic size="small">
-                    <Button
-                        icon="sort amount up"
-                        onClick={playNext}
-                        title="Play next"
-                    />
-                    <Button
-                        icon="sort amount down"
-                        onClick={playLast}
-                        title="Play last"
-                    />
-                </Button.Group>
-            </Card>
-        </List.Item>
-    );
+        return (
+            <List.Item key={t.id}>
+                <Card fluid style={trackListStyles}>
+                    <div className={styles.albumDislpay}>
+                        <img
+                            alt=""
+                            src={formatArtworkURL(t.attributes.artwork, 60)}
+                        ></img>
+                        <Button
+                            icon="play"
+                            style={buttonStyles}
+                            onClick={playNow}
+                            title="Play"
+                        />
+                    </div>
+                    <div style={textStyles}>{t.attributes.name}</div>
+                    <div style={textStyles}>{t.attributes.artistName}</div>
+                    <div style={textStyles}>{t.attributes.albumName}</div>
+                    {renderDuration(t.attributes.durationInMillis)}
+                    <Button.Group basic size="small">
+                        <Button
+                            icon="sort amount up"
+                            onClick={playNext}
+                            title="Play next"
+                        />
+                        <Button
+                            icon="sort amount down"
+                            onClick={playLast}
+                            title="Play last"
+                        />
+                    </Button.Group>
+                </Card>
+            </List.Item>
+        );
+    };
 
     return <List>{tracks.map(Track)}</List>;
 }
