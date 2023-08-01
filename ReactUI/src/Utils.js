@@ -33,3 +33,7 @@ export function formatMilliseconds(durationInMillis, seperator = ":") {
 
     return times.join(seperator);
 }
+
+export function formatArtworkURL(url, sideLength) {
+    return window.MusicKit.formatArtworkURL(url, sideLength, sideLength);
+}

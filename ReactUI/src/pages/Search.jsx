@@ -1,48 +1,80 @@
 import { useEffect, useState } from "react";
-import { Segment } from "semantic-ui-react";
+import { Dimmer, Loader, Segment } from "semantic-ui-react";
+import TrackList from "../features/TrackList/TrackList";
 
 export default function Search({ query }) {
-    const [searchResults, setSearchResults] = useState(null);
+    const [state, setState] = useState({ status: "loading", data: [] });
 
     useEffect(() => {
-        searchCatalog(query, setSearchResults);
+        (async () => {
+            const tracks = await search(query);
+            if (tracks.length > 0) {
+                setState({
+                    status: "success",
+                    data: tracks,
+                });
+            } else {
+                setState({ status: "failed", data: [] });
+            }
+        })();
     }, [query]);
 
+    let content;
+    if (state.status === "loading") {
+        content = (
+            <Dimmer active inverted>
+                <Loader>Loading</Loader>
+            </Dimmer>
+        );
+    }
+    if (state.status === "success") {
+        content = <TrackList tracks={state.data} />;
+    }
+    if (state.status === "failed") {
+        content = (
+            <div>
+                Sorry! We could not find any results for <em>{query}</em>
+            </div>
+        );
+    }
+    if (query.length === 0) {
+        content = null;
+    }
+
     return (
-        <Segment>
+        <Segment style={{ minHeight: "300px" }}>
             <h1>Search</h1>
-            {searchResults &&
-                searchResults.map((s) => (
-                    <p key={s.id}>
-                        {s.attributes.name + ", by " + s.attributes.artistName}
-                    </p>
-                ))}
+            {content}
         </Segment>
     );
 }
 
-const searchCatalog = async (query, callback) => {
+const search = async (query) => {
     const music = window.MusicKit.getInstance();
+    query = query.trim();
 
-    if (query === "") return;
+    if (query.length === 0) return [];
 
-    const queryParameters = {
-        term: query,
-        types: ["songs"],
-        l: "en-us",
-    };
-
-    const response = await music.api.music(
-        "/v1/catalog/{{storefrontId}}/search",
-        queryParameters,
-    );
-
-    const {
-        data: {
-            results: {
-                songs: { data: songs },
+    try {
+        const response = await music.api.music(
+            "/v1/catalog/{{storefrontId}}/search",
+            {
+                term: query,
+                types: ["songs"],
+                l: "en-us",
             },
-        },
-    } = response;
-    callback(songs);
+        );
+
+        const {
+            data: {
+                results: {
+                    songs: { data: tracks },
+                },
+            },
+        } = response;
+
+        return tracks;
+    } catch {
+        return [];
+    }
 };
