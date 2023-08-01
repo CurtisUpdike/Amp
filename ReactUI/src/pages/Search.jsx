@@ -62,6 +62,7 @@ const search = async (query) => {
                 term: query,
                 types: ["songs"],
                 l: "en-us",
+                limit: 15, // max is 25
             },
         );
 
