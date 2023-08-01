@@ -1,32 +1,8 @@
-import { useEffect, useState } from "react";
 import Logo from "../components/Logo";
 import { Button, Segment } from "semantic-ui-react";
 
 export default function Player() {
-    const MusicKit = window.MusicKit;
-    const music = MusicKit.getInstance();
-    const [playbackState, setPlaybackState] = useState(
-        MusicKit.PlaybackStates[music.playbackState],
-    );
-
-    useEffect(() => {
-        music.addEventListener("playbackStateDidChange", updateState);
-
-        return () => {
-            music.removeEventListener("playbackStateDidChange", updateState);
-        };
-    });
-
-    const updateState = () => {
-        setPlaybackState(MusicKit.PlaybackStates[music.playbackState]);
-    };
-
-    const centerButton =
-        playbackState === "playing" ? (
-            <Button icon="pause" onClick={async () => await music.pause()} />
-        ) : (
-            <Button icon="play" onClick={async () => await music.play()} />
-        );
+    const music = window.MusicKit.getInstance();
 
     return (
         <Segment padded>
@@ -36,7 +12,12 @@ export default function Player() {
                     icon="backward"
                     onClick={async () => await music.skipToPreviousItem()}
                 />
-                {centerButton}
+                <Button icon="play" onClick={async () => await music.play()} />
+                <Button
+                    icon="pause"
+                    onClick={async () => await music.pause()}
+                />
+                <Button icon="stop" onClick={async () => await music.stop()} />
                 <Button
                     icon="forward"
                     onClick={async () => await music.skipToNextItem()}
