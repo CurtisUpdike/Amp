@@ -31,7 +31,12 @@ export default function TrackList(props) {
 
     const Track = (t) => {
         async function playNow() {
-            await music.setQueue({ song: t.id, startPlaying: true });
+            if (music.queue.isEmpty) {
+                await music.setQueue({ song: t.id, startPlaying: true });
+            } else {
+                await music.playNext({ song: t.id });
+                await music.skipToNextItem();
+            }
         }
 
         async function playNext() {
