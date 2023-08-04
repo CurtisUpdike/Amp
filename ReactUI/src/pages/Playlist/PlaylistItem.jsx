@@ -1,5 +1,6 @@
 import { List, Card, Button } from "semantic-ui-react";
 import { formatArtworkURL, formatMilliseconds } from "../../Utils";
+import { Draggable } from "react-beautiful-dnd";
 
 const playlistItemStyles = {
     padding: "8px",
@@ -21,29 +22,52 @@ const textStyles = {
     wordWrap: "normal",
 };
 
-const PlaylistItem = ({ item, remove, isCurrentItem }) => (
-    <List.Item key={item.id}>
-        <Card fluid style={playlistItemStyles}>
-            <div>
-                <img
-                    alt=""
-                    src={formatArtworkURL(item.attributes.artwork, 60)}
-                    style={imgStyles}
-                ></img>
+const PlaylistItem = ({ item, index, remove, isCurrentItem }) => (
+    <Draggable draggableId={`${item.id}-${index}`} index={index}>
+        {(provided) => (
+            <div
+                ref={provided.innerRef}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
+            >
+                <List.Item
+                    style={{ padding: "5px 0", boxSizing: "border-box" }}
+                >
+                    <Card fluid style={playlistItemStyles}>
+                        <div>
+                            <img
+                                alt=""
+                                src={formatArtworkURL(
+                                    item.attributes.artwork,
+                                    60,
+                                )}
+                                style={imgStyles}
+                            ></img>
+                        </div>
+                        <div style={textStyles}>{item.attributes.name}</div>
+                        <div style={textStyles}>
+                            {item.attributes.artistName}
+                        </div>
+                        <div style={textStyles}>
+                            {item.attributes.albumName}
+                        </div>
+                        <div>
+                            {formatMilliseconds(
+                                item.attributes.durationInMillis,
+                            )}
+                        </div>
+                        <Button
+                            basic
+                            icon="x"
+                            onClick={remove}
+                            title="Play next"
+                            disabled={isCurrentItem}
+                        />
+                    </Card>
+                </List.Item>
             </div>
-            <div style={textStyles}>{item.attributes.name}</div>
-            <div style={textStyles}>{item.attributes.artistName}</div>
-            <div style={textStyles}>{item.attributes.albumName}</div>
-            <div>{formatMilliseconds(item.attributes.durationInMillis)}</div>
-            <Button
-                basic
-                icon="x"
-                onClick={remove}
-                title="Play next"
-                disabled={isCurrentItem}
-            />
-        </Card>
-    </List.Item>
+        )}
+    </Draggable>
 );
 
 export default PlaylistItem;

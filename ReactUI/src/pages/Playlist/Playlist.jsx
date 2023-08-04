@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { Segment, List, Button } from "semantic-ui-react";
 import PlaylistItem from "./PlaylistItem";
 
@@ -19,17 +20,36 @@ function Playlist() {
 
     const updateQueue = () => setQueue(music.queue.items);
 
+    const onDragEnd = useCallback((e) => {
+        if (!e.source || !e.destination) return;
+        if (e.source.index === e.source.destination) return;
+
+        const newQueue = Array.from(queue);
+        const [removedItem] = newQueue.splice(e.source.index, 1);
+        newQueue.splice(e.destination.index, 0, removedItem);
+
+        const currentItem = music.queue.currentItem;
+        music.queue.updateItems(newQueue);
+        music.queue._updatePosition(music.queue.indexForItem(currentItem));
+    }, []);
+
     let content;
     if (queue.length > 0) {
-        content = queue.map((item, position) => (
+        content = queue.map((item, index) => (
             <PlaylistItem
-                key={position}
+                key={index}
                 item={item}
+                index={index}
                 remove={() => {
-                    // TODO: queue.remove() is deprecated, but no alternative yet
-                    music.queue.remove(position);
+                    const currentItem = music.queue.currentItem;
+                    music.queue.removeQueueItems(
+                        (q, i) => q.item.id === item.id && i === index,
+                    );
+                    music.queue._updatePosition(
+                        music.queue.indexForItem(currentItem),
+                    );
                 }}
-                isCurrentItem={position === music.queue.position}
+                isCurrentItem={index === music.queue.position}
             />
         ));
     } else {
@@ -62,7 +82,21 @@ function Playlist() {
                     }}
                 />
             </div>
-            <List>{content}</List>
+            <DragDropContext onDragEnd={onDragEnd}>
+                <Droppable droppableId="playlist">
+                    {(provided) => (
+                        <div
+                            ref={provided.innerRef}
+                            {...provided.droppableProps}
+                        >
+                            <List style={{ paddingTop: "10px" }}>
+                                {content}
+                                {provided.placeholder}
+                            </List>
+                        </div>
+                    )}
+                </Droppable>
+            </DragDropContext>
         </Segment>
     );
 }
