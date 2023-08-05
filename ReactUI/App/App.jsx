@@ -5,14 +5,13 @@ import useAuth from "./hooks/useAuth";
 import { Container, Menu, Input } from "semantic-ui-react";
 import LoginMessage from "./features/LogInMessage";
 import Player from "./Player";
-import Home from "./pages/Home";
 import Playlist from "./pages/Playlist/Playlist";
 import Search from "./pages/Search";
 
 function App() {
     const auth = useAuth();
     const [query, setQuery] = useState("");
-    const [activePage, setActivePage] = useState("home");
+    const [activePage, setActivePage] = useState("playlist");
 
     const handleSearchChange = useCallback(
         debounce((e) => {
@@ -22,17 +21,13 @@ function App() {
         [],
     );
 
-    const handelSearchFocus = () => {
+    const handleSearchFocus = () => {
         if (query.length > 0) {
             setActivePage("search");
         }
     };
 
     const pages = [
-        {
-            name: "home",
-            component: <Home />,
-        },
         {
             name: "playlist",
             component: <Playlist />,
@@ -67,7 +62,7 @@ function App() {
                                 icon="search"
                                 placeholder="Search..."
                                 onChange={handleSearchChange}
-                                onFocus={handelSearchFocus}
+                                onFocus={handleSearchFocus}
                             />
                         </Menu.Item>
                     </Menu.Menu>
