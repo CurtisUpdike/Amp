@@ -4,7 +4,7 @@ import useAuth from "./hooks/useAuth";
 
 import { Container, Menu, Input } from "semantic-ui-react";
 import LoginMessage from "./features/LogInMessage";
-import Player from "./features/Player";
+import Player from "./Player";
 import Home from "./pages/Home";
 import Playlist from "./pages/Playlist/Playlist";
 import Search from "./pages/Search";
