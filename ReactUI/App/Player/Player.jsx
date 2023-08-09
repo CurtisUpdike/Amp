@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Divider, Segment } from "semantic-ui-react";
 import PlaybackProgress from "./PlaybackProgress";
+import PlaybackControls from "./PlaybackControls";
 
 export default function Player() {
     const MusicKit = window.MusicKit;
@@ -75,22 +76,7 @@ export default function Player() {
                     playbackState={playbackState}
                 />
             </div>
-            <Button.Group>
-                <Button
-                    icon="backward"
-                    onClick={async () => await music.skipToPreviousItem()}
-                />
-                <Button icon="play" onClick={async () => await music.play()} />
-                <Button
-                    icon="pause"
-                    onClick={async () => await music.pause()}
-                />
-                <Button icon="stop" onClick={async () => await music.stop()} />
-                <Button
-                    icon="forward"
-                    onClick={async () => await music.skipToNextItem()}
-                />
-            </Button.Group>
+            <PlaybackControls music={music} />
             <div style={{ display: "inline-block", marginLeft: "1rem" }}>
                 <Button icon={volumeIcon} onClick={mute} />
                 <input
