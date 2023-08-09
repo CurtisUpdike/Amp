@@ -1,14 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { formatSeconds } from "../Utils";
 
-const PlaybackProgress = ({
-    playbackDuration,
-    playbackTime,
-    playbackState,
-}) => {
-    const music = window.MusicKit.getInstance();
+const PlaybackProgress = ({ playbackDuration }) => {
+    const MusicKit = window.MusicKit;
+    const music = MusicKit.getInstance();
     const [state, setState] = useState("released");
+    const [playbackTime, setPlabackTime] = useState(music.currentPlaybackTime);
+    const [playbackState, setPlaybackState] = useState(
+        MusicKit.PlaybackStates[music.playbackState],
+    );
     const [value, setValue] = useState(playbackTime);
+
+    useEffect(() => {
+        music.addEventListener("playbackTimeDidChange", updatePlaybackTime);
+        music.addEventListener("playbackStateDidChange", updatePlaybackState);
+        return () => {
+            music.removeEventListener(
+                "playbackTimeDidChange",
+                updatePlaybackTime,
+            );
+            music.removeEventListener(
+                "playbackStateDidChange",
+                updatePlaybackState,
+            );
+        };
+    });
+
+    const updatePlaybackTime = () => setPlabackTime(music.currentPlaybackTime);
+
+    const updatePlaybackState = () => {
+        const currentPlaybackState =
+            MusicKit.PlaybackStates[music.playbackState];
+        if (currentPlaybackState === "stopped") {
+            setPlabackTime(music.currentPlaybackTime);
+        }
+        setPlaybackState(MusicKit.PlaybackStates[music.playbackState]);
+    };
 
     const isDisabled =
         ["playing", "paused", "stopped"].includes(
