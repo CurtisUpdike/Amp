@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Button, Divider, Segment } from "semantic-ui-react";
+import { Divider, Segment } from "semantic-ui-react";
 import PlaybackProgress from "./PlaybackProgress";
 import PlaybackControls from "./PlaybackControls";
+import VolumeControls from "./VolumeControls";
 
 export default function Player() {
     const MusicKit = window.MusicKit;
     const music = MusicKit.getInstance();
-    const [volume, setVolume] = useState(music.volume);
     const [playbackState, setPlaybackState] = useState(
         MusicKit.PlaybackStates[music.playbackState],
     );
@@ -14,36 +14,37 @@ export default function Player() {
     const [playbackDuration, setPlaybackDuration] = useState(
         music.currentPlaybackDuration,
     );
+    const [nowPlayingItem, setNowPlayingItem] = useState(null);
 
     useEffect(() => {
-        music.addEventListener("playbackVolumeDidChange", updateVolume);
         music.addEventListener("playbackTimeDidChange", updatePlaybackTime);
-        music.addEventListener(
-            "playbackDurationDidChange",
-            updatePlaybackDuration,
-        );
         music.addEventListener("playbackStateDidChange", updatePlaybackState);
+
+        // using "mediaItemStateDidChange" MusicKit.Event because
+        // "playbackDurationDidChange" and "nowPlayingItemDidChange"
+        //  are not currently updating when next song plays
+        music.addEventListener(
+            "mediaItemStateDidChange",
+            handleMediaItemChange,
+        );
         return () => {
-            music.removeEventListener("playbackVolumeDidChange", updateVolume);
             music.removeEventListener(
                 "playbackTimeDidChange",
                 updatePlaybackTime,
             );
             music.removeEventListener(
-                "playbackDurationDidChange",
-                updatePlaybackDuration,
-            );
-            music.removeEventListener(
                 "playbackStateDidChange",
                 updatePlaybackState,
+            );
+            music.removeEventListener(
+                "mediaItemStateDidChange",
+                handleMediaItemChange,
             );
         };
     });
 
-    const updateVolume = () => setVolume(music.volume);
     const updatePlaybackTime = () => setPlabackTime(music.currentPlaybackTime);
-    const updatePlaybackDuration = () =>
-        setPlaybackDuration(music.currentPlaybackDuration);
+
     const updatePlaybackState = () => {
         const currentPlaybackState =
             MusicKit.PlaybackStates[music.playbackState];
@@ -53,17 +54,10 @@ export default function Player() {
         setPlaybackState(MusicKit.PlaybackStates[music.playbackState]);
     };
 
-    const handleVolumeChange = (e) => (music.volume = e.target.value);
-    const mute = volume > 0 ? () => music.mute() : () => music.unmute();
-
-    let volumeIcon;
-    if (volume > 0.5) {
-        volumeIcon = "volume up";
-    } else if (volume > 0) {
-        volumeIcon = "volume down";
-    } else {
-        volumeIcon = "volume off";
-    }
+    const handleMediaItemChange = () => {
+        setPlaybackDuration(music.currentPlaybackDuration);
+        setNowPlayingItem(music.nowPlayingItem);
+    };
 
     return (
         <Segment padded>
@@ -77,17 +71,7 @@ export default function Player() {
                 />
             </div>
             <PlaybackControls music={music} />
-            <div style={{ display: "inline-block", marginLeft: "1rem" }}>
-                <Button icon={volumeIcon} onClick={mute} />
-                <input
-                    type="range"
-                    min="0"
-                    max="1"
-                    step="0.01"
-                    value={volume}
-                    onChange={handleVolumeChange}
-                />
-            </div>
+            <VolumeControls />
         </Segment>
     );
 }
