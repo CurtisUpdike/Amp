@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import Logo from "./Logo";
-import { Button, Segment } from "semantic-ui-react";
-import { formatSeconds } from "../Utils";
+import { Button, Divider, Segment } from "semantic-ui-react";
 import PlaybackProgress from "./PlaybackProgress";
 
 export default function Player() {
-    const music = window.MusicKit.getInstance();
+    const MusicKit = window.MusicKit;
+    const music = MusicKit.getInstance();
     const [volume, setVolume] = useState(music.volume);
+    const [playbackState, setPlaybackState] = useState(
+        MusicKit.PlaybackStates[music.playbackState],
+    );
     const [playbackTime, setPlabackTime] = useState(music.currentPlaybackTime);
     const [playbackDuration, setPlaybackDuration] = useState(
         music.currentPlaybackDuration,
@@ -19,6 +21,7 @@ export default function Player() {
             "playbackDurationDidChange",
             updatePlaybackDuration,
         );
+        music.addEventListener("playbackStateDidChange", updatePlaybackState);
         return () => {
             music.removeEventListener("playbackVolumeDidChange", updateVolume);
             music.removeEventListener(
@@ -29,6 +32,10 @@ export default function Player() {
                 "playbackDurationDidChange",
                 updatePlaybackDuration,
             );
+            music.removeEventListener(
+                "playbackStateDidChange",
+                updatePlaybackState,
+            );
         };
     });
 
@@ -36,6 +43,14 @@ export default function Player() {
     const updatePlaybackTime = () => setPlabackTime(music.currentPlaybackTime);
     const updatePlaybackDuration = () =>
         setPlaybackDuration(music.currentPlaybackDuration);
+    const updatePlaybackState = () => {
+        const currentPlaybackState =
+            MusicKit.PlaybackStates[music.playbackState];
+        if (currentPlaybackState === "stopped") {
+            setPlabackTime(music.currentPlaybackTime);
+        }
+        setPlaybackState(MusicKit.PlaybackStates[music.playbackState]);
+    };
 
     const handleVolumeChange = (e) => (music.volume = e.target.value);
     const mute = volume > 0 ? () => music.mute() : () => music.unmute();
@@ -51,7 +66,15 @@ export default function Player() {
 
     return (
         <Segment padded>
-            <Logo>AMP</Logo>
+            <h1 style={{ fontSize: "1em", textAlign: "center" }}>AMP</h1>
+            <Divider />
+            <div style={{ margin: "1rem 0" }}>
+                <PlaybackProgress
+                    playbackTime={playbackTime}
+                    playbackDuration={playbackDuration}
+                    playbackState={playbackState}
+                />
+            </div>
             <Button.Group>
                 <Button
                     icon="backward"
@@ -77,18 +100,6 @@ export default function Player() {
                     step="0.01"
                     value={volume}
                     onChange={handleVolumeChange}
-                />
-            </div>
-            <div style={{ marginTop: "1rem" }}>
-                <div
-                    style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                    <span>{formatSeconds(playbackTime) || " "}</span>
-                    <span>{formatSeconds(playbackDuration) || " "}</span>
-                </div>
-                <PlaybackProgress
-                    playbackTime={playbackTime}
-                    playbackDuration={playbackDuration}
                 />
             </div>
         </Segment>
