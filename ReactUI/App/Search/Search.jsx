@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Dimmer, Loader, Segment } from "semantic-ui-react";
-import TrackList from "../features/TrackList/TrackList";
+import TrackList from "./TrackList";
 
 export default function Search({ query }) {
     const [state, setState] = useState({ status: "loading", data: [] });

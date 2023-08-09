@@ -1,12 +1,12 @@
 import { useCallback, useState } from "react";
 import { debounce } from "./Utils";
-import useAuth from "./hooks/useAuth";
+import useAuth from "./useAuth";
 
 import { Container, Menu, Input } from "semantic-ui-react";
-import LoginMessage from "./features/LogInMessage";
+import LoginMessage from "./LogInMessage";
 import Player from "./Player";
-import Playlist from "./pages/Playlist/Playlist";
-import Search from "./pages/Search";
+import Playlist from "./Playlist";
+import Search from "./Search";
 
 function App() {
     const auth = useAuth();

@@ -1,5 +1,5 @@
 import { List, Card, Button } from "semantic-ui-react";
-import { formatArtworkURL, formatMilliseconds } from "../../Utils";
+import { formatArtworkURL, formatMilliseconds } from "../Utils";
 import styles from "./TrackList.module.css";
 
 const trackListStyles = {
