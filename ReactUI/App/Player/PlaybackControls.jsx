@@ -1,18 +1,11 @@
-import { useState } from "react";
 import { Button } from "semantic-ui-react";
+import capitalize from "../../utils/capitalize";
 import useAutoplay from "./useAutoplay";
+import useRepeatMode from "./useRepeatMode";
 
 const PlayerControls = ({ music }) => {
-    const [repeatMode, setRepeatMode] = useState(0);
     const { autoplayEnabled, setAutoplay } = useAutoplay();
-
-    function handleRepeat() {
-        setRepeatMode(() => {
-            const newRepeatMode = (music.repeatMode + 1) % 3;
-            music.repeatMode = newRepeatMode;
-            return newRepeatMode;
-        });
-    }
+    const { repeatMode, changeRepeatMode } = useRepeatMode();
 
     return (
         <div
@@ -44,12 +37,8 @@ const PlayerControls = ({ music }) => {
             <Button
                 icon="sync alternate"
                 labelPosition="left"
-                onClick={handleRepeat}
-                content={`Repeat (${
-                    (repeatMode === 0 && "Off") ||
-                    (repeatMode === 1 && "One") ||
-                    (repeatMode === 2 && "All")
-                })`}
+                onClick={changeRepeatMode}
+                content={`Repeat (${capitalize(repeatMode)})`}
             />
         </div>
     );
