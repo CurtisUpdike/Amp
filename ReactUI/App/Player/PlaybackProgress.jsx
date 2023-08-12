@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { formatSeconds } from "../Utils";
+import formatSeconds from "../../utils/formatSeconds";
 
 const PlaybackProgress = ({ playbackDuration }) => {
     const MusicKit = window.MusicKit;

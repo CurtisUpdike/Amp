@@ -1,5 +1,6 @@
 import { List, Card, Button } from "semantic-ui-react";
-import { formatArtworkURL, formatMilliseconds } from "../Utils";
+import formatArtworkUrl from "../../utils/formatArtwork";
+import formatMilliseconds from "../../utils/formatMilliseconds";
 import styles from "./TrackList.module.css";
 
 const trackListStyles = {
@@ -61,7 +62,7 @@ export default function TrackList(props) {
                     <div className={styles.albumDislpay}>
                         <img
                             alt=""
-                            src={formatArtworkURL(t.attributes.artwork, 60)}
+                            src={formatArtworkUrl(t.attributes.artwork, 60)}
                         ></img>
                         <Button
                             icon="play"

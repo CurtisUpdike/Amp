@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { debounce } from "./Utils";
+import debounce from "../utils/debounce";
 import useAuth from "./useAuth";
 
 import { Container, Menu, Input } from "semantic-ui-react";

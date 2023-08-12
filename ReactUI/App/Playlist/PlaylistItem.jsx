@@ -1,5 +1,6 @@
 import { List, Card, Button } from "semantic-ui-react";
-import { formatArtworkURL, formatMilliseconds } from "../Utils";
+import formatArtworkUrl from "../../utils/formatArtwork";
+import formatMilliseconds from "../../utils/formatMilliseconds";
 import { Draggable } from "react-beautiful-dnd";
 
 const playlistItemStyles = {
@@ -37,7 +38,7 @@ const PlaylistItem = ({ item, index, remove, isCurrentItem }) => (
                         <div>
                             <img
                                 alt=""
-                                src={formatArtworkURL(
+                                src={formatArtworkUrl(
                                     item.attributes.artwork,
                                     60,
                                 )}
