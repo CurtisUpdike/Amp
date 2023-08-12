@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Button } from "semantic-ui-react";
+import useAutoplay from "./useAutoplay";
 
 const PlayerControls = ({ music }) => {
     const [repeatMode, setRepeatMode] = useState(0);
+    const { autoplayEnabled, setAutoplay } = useAutoplay();
 
     function handleRepeat() {
         setRepeatMode(() => {
@@ -36,6 +38,9 @@ const PlayerControls = ({ music }) => {
                     onClick={async () => await music.skipToNextItem()}
                 />
             </Button.Group>
+            <Button onClick={() => setAutoplay(!autoplayEnabled)}>
+                Autoplay ({autoplayEnabled ? "On" : "Off"})
+            </Button>
             <Button
                 icon="sync alternate"
                 labelPosition="left"
