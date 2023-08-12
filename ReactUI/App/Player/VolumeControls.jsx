@@ -1,41 +1,22 @@
-import { useState, useEffect } from "react";
 import { Button } from "semantic-ui-react";
+import useVolume from "./useVolume";
 
 const VolumeControls = () => {
-    const music = window.MusicKit.getInstance();
-    const [volume, setVolume] = useState(music.volume);
-
-    useEffect(() => {
-        music.addEventListener("playbackVolumeDidChange", updateVolume);
-        return () => {
-            music.removeEventListener("playbackVolumeDidChange", updateVolume);
-        };
-    });
-
-    const updateVolume = () => setVolume(music.volume);
-    const handleVolumeChange = (e) => (music.volume = e.target.value);
-
-    const mute = volume > 0 ? () => music.mute() : () => music.unmute();
-
-    let volumeIcon;
-    if (volume > 0.5) {
-        volumeIcon = "volume up";
-    } else if (volume > 0) {
-        volumeIcon = "volume down";
-    } else {
-        volumeIcon = "volume off";
-    }
+    const { volume, setVolume, toggleMute, muted } = useVolume();
 
     return (
-        <div style={{ display: "inline-block", marginLeft: "1rem" }}>
-            <Button icon={volumeIcon} onClick={mute} />
+        <div>
+            <Button
+                icon={muted ? "volume off" : "volume up"}
+                onClick={toggleMute}
+            />
             <input
                 type="range"
                 min="0"
                 max="1"
                 step="0.01"
                 value={volume}
-                onChange={handleVolumeChange}
+                onChange={(e) => setVolume(e.target.value)}
             />
         </div>
     );
