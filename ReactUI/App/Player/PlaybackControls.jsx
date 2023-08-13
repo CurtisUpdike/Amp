@@ -1,47 +1,60 @@
-import { Button } from "semantic-ui-react";
-import capitalize from "../../utils/capitalize";
 import useAutoplay from "./useAutoplay";
 import useRepeatMode from "./useRepeatMode";
+import styles from "./PlaybackControls.module.css";
+
+const IconButton = ({ children, ...props }) => (
+  <button
+    className={`material-symbols-sharp ${styles.button} ${styles.iconButton} `}
+    {...props}
+  >
+    {children}
+  </button>
+);
+
+const ToggleButton = ({ children, enabled, ...props }) => (
+  <button
+    className={`${styles.button} ${styles.toggleButton} ${
+      enabled ? styles.enabled : ""
+    }`}
+    {...props}
+  >
+    {children}
+  </button>
+);
 
 const PlayerControls = ({ music }) => {
-    const { autoplayEnabled, setAutoplay } = useAutoplay();
-    const { repeatMode, changeRepeatMode } = useRepeatMode();
+  const { autoplayEnabled, toggleAutoplay } = useAutoplay();
+  const { repeatEnabled, toggleRepeat } = useRepeatMode();
 
-    return (
-        <div
-            style={{
-                display: "flex",
-                justifyContent: "space-between",
-                margin: "0 0 1em 0",
-            }}
-        >
-            <Button.Group>
-                <Button
-                    icon="backward"
-                    onClick={async () => await music.skipToPreviousItem()}
-                />
-                <Button icon="play" onClick={async () => await music.play()} />
-                <Button
-                    icon="pause"
-                    onClick={async () => await music.pause()}
-                />
-                <Button icon="stop" onClick={async () => await music.stop()} />
-                <Button
-                    icon="forward"
-                    onClick={async () => await music.skipToNextItem()}
-                />
-            </Button.Group>
-            <Button onClick={() => setAutoplay(!autoplayEnabled)}>
-                Autoplay ({autoplayEnabled ? "On" : "Off"})
-            </Button>
-            <Button
-                icon="sync alternate"
-                labelPosition="left"
-                onClick={changeRepeatMode}
-                content={`Repeat (${capitalize(repeatMode)})`}
-            />
-        </div>
-    );
+  return (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        margin: "0 0 1em 0",
+      }}
+    >
+      <div className={styles.playbackControls}>
+        <IconButton onClick={async () => await music.skipToPreviousItem()}>
+          skip_previous
+        </IconButton>
+        <IconButton onClick={async () => await music.play()}>
+          play_arrow
+        </IconButton>
+        <IconButton onClick={async () => await music.pause()}>pause</IconButton>
+        <IconButton onClick={async () => await music.stop()}>stop</IconButton>
+        <IconButton onClick={async () => await music.skipToNextItem()}>
+          skip_next
+        </IconButton>
+      </div>
+      <ToggleButton enabled={autoplayEnabled} onClick={() => toggleAutoplay()}>
+        Autoplay
+      </ToggleButton>
+      <ToggleButton enabled={repeatEnabled} onClick={() => toggleRepeat()}>
+        Repeat
+      </ToggleButton>
+    </div>
+  );
 };
 
 export default PlayerControls;
