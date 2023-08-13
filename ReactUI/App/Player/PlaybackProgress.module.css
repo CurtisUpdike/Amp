@@ -1,0 +1,53 @@
+.playbackProgress {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+}
+
+/* Chrome, Safari, Opera, and Edge Chromium */
+.playbackProgress::-webkit-slider-runnable-track {
+  background: linear-gradient(0.25turn, #1b1931, #262342, #1d1d37);
+  height: 1rem;
+  border-top: 2px solid #1c1a32;
+  border-left: 2px solid #1c1a32;
+  border-right: 2px solid #595671;
+  border-bottom: 2px solid #595671;
+}
+
+/* Firefox */
+.playbackProgress::-moz-range-track {
+  background: linear-gradient(0.25turn, #1b1931, #262342, #1d1d37);
+  height: 1rem;
+  border-top: 2px solid #1c1a32;
+  border-left: 2px solid #1c1a32;
+  border-right: 2px solid #595671;
+  border-bottom: 2px solid #595671;
+}
+
+/* Chrome, Safari, Opera, and Edge Chromium */
+.playbackProgress::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  margin-top: -0.125rem; /* Centers thumb on the track */
+  height: 1rem;
+  width: 2rem;
+  background-color: #755c22;
+  border-top: 0.125rem outset #483b26;
+  border-right: 0.125rem outset #000;
+  border-bottom: 0.125rem outset #000;
+  border-left: 0.125rem outset #c9ae64;
+  box-shadow:
+    inset 0 0 0 0.2rem #f5e3b3,
+    inset 0 0.3rem #fff,
+    inset 0 -0.3rem #af9960;
+}
+
+/* Firefox */
+input[type="range"]::-moz-range-thumb {
+  border: none; /*Removes extra border that FF applies*/
+  border-radius: 0; /*Removes default border-radius that FF applies*/
+  background-color: #5cd5eb;
+  height: 2rem;
+  width: 1rem;
+}
