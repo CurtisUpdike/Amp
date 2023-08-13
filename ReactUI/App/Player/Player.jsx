@@ -1,52 +1,54 @@
 import { useEffect, useState } from "react";
-import { Divider, Segment } from "semantic-ui-react";
 import PlaybackProgress from "./PlaybackProgress";
 import PlaybackControls from "./PlaybackControls";
 import VolumeControls from "./VolumeControls";
 import NowPlayingDisplay from "./NowPlayingDisplay";
+import styles from "./Player.module.css";
 
 export default function Player() {
-    const MusicKit = window.MusicKit;
-    const music = MusicKit.getInstance();
-    const [playbackDuration, setPlaybackDuration] = useState(
-        music.currentPlaybackDuration,
-    );
-    const [nowPlayingItem, setNowPlayingItem] = useState(music.nowPlayingItem);
+  const MusicKit = window.MusicKit;
+  const music = MusicKit.getInstance();
+  const [playbackDuration, setPlaybackDuration] = useState(
+    music.currentPlaybackDuration,
+  );
+  const [nowPlayingItem, setNowPlayingItem] = useState(music.nowPlayingItem);
 
-    useEffect(() => {
-        // using "mediaItemStateDidChange" MusicKit.Event because
-        // "playbackDurationDidChange" and "nowPlayingItemDidChange"
-        //  are not currently updating when next song plays
-        music.addEventListener(
-            "mediaItemStateDidChange",
-            handleMediaItemChange,
-        );
-        return () => {
-            music.removeEventListener(
-                "mediaItemStateDidChange",
-                handleMediaItemChange,
-            );
-        };
-    });
-
-    const handleMediaItemChange = () => {
-        setPlaybackDuration(music.currentPlaybackDuration);
-        setNowPlayingItem(music.nowPlayingItem);
+  useEffect(() => {
+    // using "mediaItemStateDidChange" MusicKit.Event because
+    // "playbackDurationDidChange" and "nowPlayingItemDidChange"
+    //  are not currently updating when next song plays
+    music.addEventListener("mediaItemStateDidChange", handleMediaItemChange);
+    return () => {
+      music.removeEventListener(
+        "mediaItemStateDidChange",
+        handleMediaItemChange,
+      );
     };
+  });
 
-    return (
-        <Segment padded>
-            <h1 style={{ fontSize: "1em", textAlign: "center" }}>AMP</h1>
-            <Divider />
-            <NowPlayingDisplay
-                nowPlayingItem={nowPlayingItem}
-                queueIsEmpty={music.queueIsEmpty}
-            />
-            <div style={{ margin: "1rem 0" }}>
-                <PlaybackProgress playbackDuration={playbackDuration} />
-            </div>
-            <PlaybackControls music={music} />
-            <VolumeControls />
-        </Segment>
-    );
+  const handleMediaItemChange = () => {
+    setPlaybackDuration(music.currentPlaybackDuration);
+    setNowPlayingItem(music.nowPlayingItem);
+  };
+
+  return (
+    <>
+      <div className={styles.heading}>
+        <div className={styles.banner} />
+        <h1 className={styles.logo}>Amp</h1>
+        <div className={styles.banner} />
+      </div>
+      <div className={styles.player}>
+        <NowPlayingDisplay
+          nowPlayingItem={nowPlayingItem}
+          queueIsEmpty={music.queueIsEmpty}
+        />
+        <div style={{ margin: "1rem 0" }}>
+          <PlaybackProgress playbackDuration={playbackDuration} />
+        </div>
+        <PlaybackControls music={music} />
+        <VolumeControls />
+      </div>
+    </>
+  );
 }
