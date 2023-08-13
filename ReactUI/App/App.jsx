@@ -2,11 +2,12 @@ import { useCallback, useState } from "react";
 import debounce from "../utils/debounce";
 import useAuth from "./useAuth";
 
-import { Container, Menu, Input } from "semantic-ui-react";
+import { Menu, Input } from "semantic-ui-react";
 import LoginMessage from "./LogInMessage";
 import Player from "./Player";
 import Playlist from "./Playlist";
 import Search from "./Search";
+import styles from "./App.module.css";
 
 function App() {
     const auth = useAuth();
@@ -50,7 +51,7 @@ function App() {
     const currentPage = pages.find((p) => p.name === activePage).component;
 
     return (
-        <Container style={{ marginTop: "3em" }} text>
+        <div className={styles.app}>
             {!auth.isAuthorized && <LoginMessage login={auth.authorize} />}
             <Player />
             <div>
@@ -69,7 +70,7 @@ function App() {
                 </Menu>
                 {currentPage}
             </div>
-        </Container>
+        </div>
     );
 }
 

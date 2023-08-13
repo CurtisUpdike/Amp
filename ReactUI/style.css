@@ -2,22 +2,36 @@
 *,
 ::before,
 ::after {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    border: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
 }
 
 /* Styles */
 html,
 body {
-    background: linear-gradient(#0a0a0c, #221f28);
-    min-width: 100%;
-    min-height: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 1rem;
+  background: #2f3d40;
+  min-width: 100%;
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+}
+
+:root {
+  --app-background: linear-gradient(0.25turn, #202033, #373857, #202033);
+  --app-border-radius: none;
+  --app-border: 1px outset #0d0d0d;
+  --font-color-primary: #fff;
+  --font-color-secondary: #35f22e;
 }
