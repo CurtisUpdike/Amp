@@ -1,0 +1,23 @@
+/* Resets */
+*,
+::before,
+::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+/* Styles */
+html,
+body {
+    background: linear-gradient(#0a0a0c, #221f28);
+    min-width: 100%;
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+}
