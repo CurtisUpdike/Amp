@@ -15,7 +15,7 @@
 /* Styles */
 html,
 body {
-  background: #2f3d40;
+  background: #38365d;
   min-width: 100%;
   min-height: 100%;
   display: flex;
@@ -29,9 +29,10 @@ body {
 }
 
 :root {
-  --app-background: linear-gradient(0.25turn, #202033, #373857, #202033);
-  --app-border-radius: none;
-  --app-border: 1px outset #0d0d0d;
   --font-color-primary: #fff;
   --font-color-secondary: #35f22e;
+  --app-background: linear-gradient(0.25turn, #151521, #302e4b, #1e1e2f);
+  --app-border-radius: none;
+  --app-border: 1px outset #0d0d0d;
+  --section-background: linear-gradient(0.25turn, #212132, #383759, #2f2e49);
 }
