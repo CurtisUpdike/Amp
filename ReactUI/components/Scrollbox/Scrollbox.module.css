@@ -1,0 +1,52 @@
+.scrollbox {
+  overflow-y: scroll;
+  height: 300px;
+  color: var(--font-color-secondary);
+  background-color: #000;
+  border-width: 0.2rem;
+  border-style: solid;
+  border-color: #1b1b2a;
+  border-top-color: var(--inset-border-top-color);
+  border-right-color: var(--inset-border-right-color);
+  border-bottom-color: var(--inset-border-bottom-color);
+  border-left-color: var(--inset-border-left-color);
+
+  --scrollbar-border-thickness: 0.3rem;
+  --scrollbar-width: 1em;
+  --scrollbar-track-color: #1e1d37;
+
+  &::-webkit-scrollbar {
+    font-size: 18px;
+    width: 1em;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    font-size: 18px;
+    background: #af9960;
+    border-width: 0.125em;
+    border-style: outset;
+    border-top-color: #af9960;
+    border-right-color: #000;
+    border-bottom-color: #000;
+    border-left-color: #af9960;
+    box-shadow:
+      inset 0 0.125em #755c22,
+      inset 0.125em 0 #755c22,
+      inset -0.125em 0 #af9960,
+      inset 0 -0.125em #af9960,
+      inset 0 0.25em #ece1ba,
+      inset 0 -0.25em #ece1ba,
+      inset 0.25em 0 #ece1ba,
+      inset -0.25em 0 #d3c496,
+      inset 0.375em 0 #755c22;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #2b2a43;
+    box-shadow: inset 0.2rem 0 #151521;
+  }
+
+  &:active::-webkit-scrollbar-thumb {
+    border-style: inset;
+  }
+}
