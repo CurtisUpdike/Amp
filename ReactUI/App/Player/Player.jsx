@@ -32,23 +32,16 @@ export default function Player() {
   };
 
   return (
-    <>
-      <div className={styles.heading}>
-        <div className={styles.banner} />
-        <h1 className={styles.logo}>Amp</h1>
-        <div className={styles.banner} />
+    <section className={styles.player}>
+      <NowPlayingDisplay
+        nowPlayingItem={nowPlayingItem}
+        queueIsEmpty={music.queueIsEmpty}
+      />
+      <div style={{ margin: "1rem 0" }}>
+        <PlaybackProgress playbackDuration={playbackDuration} />
       </div>
-      <div className={styles.player}>
-        <NowPlayingDisplay
-          nowPlayingItem={nowPlayingItem}
-          queueIsEmpty={music.queueIsEmpty}
-        />
-        <div style={{ margin: "1rem 0" }}>
-          <PlaybackProgress playbackDuration={playbackDuration} />
-        </div>
-        <PlaybackControls music={music} />
-        <VolumeControls />
-      </div>
-    </>
+      <PlaybackControls music={music} />
+      <VolumeControls />
+    </section>
   );
 }

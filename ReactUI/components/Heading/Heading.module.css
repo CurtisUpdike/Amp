@@ -1,0 +1,24 @@
+.heading {
+  margin: 0.2em 1em;
+  font-size: 1.125rem;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+
+.text {
+  color: var(--font-color-primary);
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: inherit;
+  letter-spacing: 0.125em;
+  text-align: center;
+  margin: 0 0.5rem;
+}
+
+.banner {
+  height: 0.75rem;
+  background: linear-gradient(#eccf7a, #ffffff, #a3956a, #3f422b, #eccf7a);
+  border-radius: 3px;
+  border: 1px outset #393b59;
+}
