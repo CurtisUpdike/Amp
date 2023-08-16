@@ -1,0 +1,16 @@
+.section {
+  padding: 1rem;
+  border: 2px groove #393b59;
+  background: var(--section-background);
+  border-width: 0.125rem;
+  border-style: solid;
+  border-top-color: #171723;
+  border-right-color: #58586e;
+  border-bottom-color: #58586e;
+  border-left-color: #171723;
+  box-shadow:
+    inset 0 0.125rem #58586e,
+    inset -0.125rem 0 #171723,
+    inset 0 -0.125rem #171723,
+    inset 0.125rem 0 #58586e;
+}

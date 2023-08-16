@@ -3,7 +3,7 @@ import PlaybackProgress from "./PlaybackProgress";
 import PlaybackControls from "./PlaybackControls";
 import VolumeControls from "./VolumeControls";
 import NowPlayingDisplay from "./NowPlayingDisplay";
-import styles from "./Player.module.css";
+import Section from "../../components/Section";
 
 export default function Player() {
   const MusicKit = window.MusicKit;
@@ -32,16 +32,14 @@ export default function Player() {
   };
 
   return (
-    <section className={styles.player}>
+    <Section>
       <NowPlayingDisplay
         nowPlayingItem={nowPlayingItem}
         queueIsEmpty={music.queueIsEmpty}
       />
-      <div style={{ margin: "1rem 0" }}>
-        <PlaybackProgress playbackDuration={playbackDuration} />
-      </div>
+      <PlaybackProgress playbackDuration={playbackDuration} />
       <PlaybackControls music={music} />
       <VolumeControls />
-    </section>
+    </Section>
   );
 }
