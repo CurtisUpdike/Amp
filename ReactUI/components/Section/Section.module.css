@@ -1,5 +1,5 @@
 .section {
-  padding: 1rem;
+  padding: 0.75rem 0.5rem;
   border: 2px groove #393b59;
   background: var(--section-background);
   border-width: 0.125rem;

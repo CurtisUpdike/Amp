@@ -1,0 +1,25 @@
+.current {
+  color: #fff;
+}
+
+.item {
+  margin-left: 2em;
+  padding-top: 0.25em;
+  padding-right: 0.5em;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mainText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+}
+
+.duration {
+  padding-left: 0.5rem;
+}

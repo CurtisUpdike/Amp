@@ -1,74 +1,31 @@
-import { List, Card, Button } from "semantic-ui-react";
-import formatArtworkUrl from "../../utils/formatArtwork";
 import formatMilliseconds from "../../utils/formatMilliseconds";
 import { Draggable } from "react-beautiful-dnd";
+import styles from "./PlaylistItem.module.css";
 
-const playlistItemStyles = {
-    padding: "8px",
-    display: "grid",
-    gridTemplateColumns: "30px 3fr 2fr 2fr 0.5fr 0.5fr",
-    gridColumnGap: "10px",
-    alignItems: "center",
-};
-
-const imgStyles = {
-    width: "30px",
-    height: "30px",
-};
-
-const textStyles = {
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    whiteSpace: "nowrap",
-    wordWrap: "normal",
-};
-
-const PlaylistItem = ({ item, index, remove, isCurrentItem }) => (
+const PlaylistItem = ({ item, index, play, isCurrentItem }) => {
+  const {
+    attributes: { name, artistName, durationInMillis },
+  } = item;
+  return (
     <Draggable draggableId={`${item.id}-${index}`} index={index}>
-        {(provided) => (
-            <div
-                ref={provided.innerRef}
-                {...provided.draggableProps}
-                {...provided.dragHandleProps}
-            >
-                <List.Item
-                    style={{ padding: "5px 0", boxSizing: "border-box" }}
-                >
-                    <Card fluid style={playlistItemStyles}>
-                        <div>
-                            <img
-                                alt=""
-                                src={formatArtworkUrl(
-                                    item.attributes.artwork,
-                                    60,
-                                )}
-                                style={imgStyles}
-                            ></img>
-                        </div>
-                        <div style={textStyles}>{item.attributes.name}</div>
-                        <div style={textStyles}>
-                            {item.attributes.artistName}
-                        </div>
-                        <div style={textStyles}>
-                            {item.attributes.albumName}
-                        </div>
-                        <div>
-                            {formatMilliseconds(
-                                item.attributes.durationInMillis,
-                            )}
-                        </div>
-                        <Button
-                            basic
-                            icon="x"
-                            onClick={remove}
-                            title="Play next"
-                            disabled={isCurrentItem}
-                        />
-                    </Card>
-                </List.Item>
-            </div>
-        )}
+      {(provided) => (
+        <li
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          className={`${styles.item} + ${isCurrentItem ? styles.current : ""}`}
+          onDoubleClick={() => play()}
+        >
+          <div className={styles.info}>
+            <span className={styles.mainText}>{`${name} — ${artistName}`}</span>
+            <span className={styles.duration}>
+              {formatMilliseconds(durationInMillis)}
+            </span>
+          </div>
+        </li>
+      )}
     </Draggable>
-);
+  );
+};
 
 export default PlaylistItem;
