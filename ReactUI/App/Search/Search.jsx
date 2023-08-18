@@ -1,81 +1,46 @@
-import { useEffect, useState } from "react";
-import { Dimmer, Loader, Segment } from "semantic-ui-react";
-import TrackList from "./TrackList";
+import { useEffect, useState, useCallback } from "react";
+import { search } from "./musicKitHelpers";
+import debounce from "../../utils/debounce";
+import Section from "../../components/Section";
+import SongList from "./SongList";
+import Scrollbox from "../../components/Scrollbox";
+import styles from "./Search.module.css";
 
-export default function Search({ query }) {
-    const [state, setState] = useState({ status: "loading", data: [] });
+export default function Search() {
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
 
-    useEffect(() => {
-        (async () => {
-            const tracks = await search(query);
-            if (tracks.length > 0) {
-                setState({
-                    status: "success",
-                    data: tracks,
-                });
-            } else {
-                setState({ status: "failed", data: [] });
-            }
-        })();
-    }, [query]);
+  useEffect(() => {
+    (async () => {
+      const { songs } = await search(query);
+      setResults(songs);
+    })();
+  }, [query]);
 
-    let content;
-    if (state.status === "loading") {
-        content = (
-            <Dimmer active inverted>
-                <Loader>Loading</Loader>
-            </Dimmer>
-        );
-    }
-    if (state.status === "success") {
-        content = <TrackList tracks={state.data} />;
-    }
-    if (state.status === "failed") {
-        content = (
-            <div>
-                Sorry! We could not find any results for <em>{query}</em>
-            </div>
-        );
-    }
-    if (query.length === 0) {
-        content = null;
-    }
+  const handleSearchChange = useCallback(
+    debounce((e) => {
+      setQuery(e.target.value);
+    }),
+    [],
+  );
 
-    return (
-        <Segment style={{ minHeight: "300px" }}>
-            <h1>Search</h1>
-            {content}
-        </Segment>
-    );
+  let content;
+  if (query.length > 0 && results.length > 0) {
+    content = <SongList songs={results} />;
+  } else {
+    content = null;
+  }
+
+  return (
+    <Section>
+      <label className={styles.searchInput}>
+        Search:
+        <input
+          placeholder="Find your next song"
+          onChange={handleSearchChange}
+        />
+      </label>
+      <Scrollbox>{content}</Scrollbox>
+    </Section>
+  );
 }
-
-const search = async (query) => {
-    const music = window.MusicKit.getInstance();
-    query = query.trim();
-
-    if (query.length === 0) return [];
-
-    try {
-        const response = await music.api.music(
-            "/v1/catalog/{{storefrontId}}/search",
-            {
-                term: query,
-                types: ["songs"],
-                l: "en-us",
-                limit: 15, // max is 25
-            },
-        );
-
-        const {
-            data: {
-                results: {
-                    songs: { data: tracks },
-                },
-            },
-        } = response;
-
-        return tracks;
-    } catch {
-        return [];
-    }
-};
