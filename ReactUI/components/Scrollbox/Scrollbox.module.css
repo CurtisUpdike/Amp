@@ -38,14 +38,14 @@
       inset 0.25em 0 #ece1ba,
       inset -0.25em 0 #d3c496,
       inset 0.375em 0 #755c22;
+
+    &:active {
+      border-style: inset;
+    }
   }
 
   &::-webkit-scrollbar-track {
     background: #2b2a43;
     box-shadow: inset 0.2rem 0 #151521;
-  }
-
-  &:active::-webkit-scrollbar-thumb {
-    border-style: inset;
   }
 }
