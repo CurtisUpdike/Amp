@@ -4,6 +4,7 @@ export default function useQueue() {
   const MusicKit = window.MusicKit;
   const music = MusicKit.getInstance();
   const [queue, setQueue] = useState(music.queue.items);
+  const [position, setPosition] = useState(music.queue.position);
 
   useEffect(() => {
     music.addEventListener("queueItemsDidChange", updateQueue);
@@ -15,7 +16,10 @@ export default function useQueue() {
     };
   });
 
-  const updateQueue = () => setQueue(music.queue.items);
+  function updateQueue() {
+    setQueue(music.queue.items);
+    setPosition(music.queue.position);
+  }
 
   function moveQueueItem(orignalIndex, targetIndex) {
     if (orignalIndex === targetIndex) return;
@@ -24,10 +28,11 @@ export default function useQueue() {
     const [removedItem] = newQueue.splice(orignalIndex, 1);
     newQueue.splice(targetIndex, 0, removedItem);
 
+    // API not currently stable, revisit later
     const currentItem = music.queue.currentItem;
     music.queue.updateItems(newQueue);
     music.queue._updatePosition(music.queue.indexForItem(currentItem));
   }
 
-  return { queue, moveQueueItem };
+  return { queue, position };
 }
