@@ -4,22 +4,51 @@
 
 .item {
   margin-left: 2em;
-  padding-top: 0.25em;
-  padding-right: 0.5em;
-}
+  padding: 0.25em 0.5em;
+  user-select: none;
 
-.info {
-  display: flex;
-  justify-content: space-between;
-}
+  .container {
+    display: flex;
+    align-items: center;
+  }
 
-.mainText {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  word-wrap: normal;
-}
+  .info {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
+    flex: 1;
+  }
 
-.duration {
-  padding-left: 0.5rem;
+  .duration {
+    padding-left: 0.5rem;
+  }
+
+  button {
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0 0 0 0.25em;
+    background-color: #000;
+    color: var(--font-color-secondary);
+
+    &:hover {
+      border: none;
+      box-shadow: none;
+      padding: 0;
+      margin: 0 0 0 0.25em;
+      background-color: #000;
+
+      color: green;
+    }
+
+    &:active {
+      border: none;
+      box-shadow: none;
+      padding: 0;
+      margin: 0 0 0 0.25em;
+      background-color: #000;
+      color: greenyellow;
+    }
+  }
 }

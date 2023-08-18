@@ -7,9 +7,29 @@ export async function playAtIndex(index) {
 
 export async function removeItemAtIndex(item, index) {
   const music = window.MusicKit.getInstance();
-  const currentItem = music.queue.currentItem;
-  music.queue.removeQueueItems((q, i) => q.item.id === item.id && i === index);
-  music.queue._updatePosition(music.queue.indexForItem(currentItem));
+
+  const isOnlyItemInQueue = music.queue.items.length === 1;
+  if (isOnlyItemInQueue) {
+    music.clearQueue();
+    await music.stop();
+    return;
+  }
+
+  const matchItem = (q, i) => q.item.id === item.id && i === index;
+
+  const isCurrentlyPlaying = index === music.queue.position;
+  if (isCurrentlyPlaying) {
+    await music.stop();
+    const currentItem =
+      music.queue.nextPlayableItem || music.queue.previousPlayableItem;
+    music.queue.removeQueueItems(matchItem);
+    music.queue._updatePosition(music.queue.indexForItem(currentItem));
+    await music.play();
+  } else {
+    const currentItem = music.queue.currentItem;
+    music.queue.removeQueueItems(matchItem);
+    music.queue._updatePosition(music.queue.indexForItem(currentItem));
+  }
 }
 
 export async function toggleShuffle() {
