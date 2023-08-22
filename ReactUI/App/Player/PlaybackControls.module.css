@@ -1,43 +1,6 @@
-.button {
-  background-color: #bdced6;
-  color: #4a5a6b;
-  font-size: 1rem;
-  padding: 0 0.5rem;
-  text-transform: uppercase;
-  border-width: 0.125rem;
-  border-style: outset;
-  border-top-color: #adb5c6;
-  border-right-color: #4a5a6b;
-  border-bottom-color: #4a5a6b;
-  border-left-color: #adb5c6;
-  box-shadow:
-    inset 0 0.125rem #efffff,
-    inset -0.125rem 0 #7b8494,
-    inset 0 -0.125rem #7b8494,
-    inset 0.125rem 0 #efffff;
-}
-
-.button:active {
-  background-color: #acbcc2;
-  border-style: inset;
-}
-
 .iconButton {
-  background-color: #bdced6;
-  color: #4a5a6b;
   font-size: 2rem;
   padding: 0 0.5rem;
-  border-width: 0.125rem;
-  border-style: outset;
-  border-top-color: #adb5c6;
-  border-right-color: #4a5a6b;
-  border-bottom-color: #4a5a6b;
-  border-left-color: #adb5c6;
-  box-shadow:
-    inset 0 0.125rem #efffff,
-    inset -0.125rem 0 #7b8494,
-    inset 0 -0.125rem #7b8494,
-    inset 0.125rem 0 #efffff;
 }
 
 .toggleButton {
@@ -52,7 +15,7 @@
   margin-right: 0.5rem;
 }
 
-.toggleButton.enabled::before {
+.enabled::before {
   color: var(--font-color-secondary);
 }
 
