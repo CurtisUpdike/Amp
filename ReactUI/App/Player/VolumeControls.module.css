@@ -9,6 +9,8 @@
 }
 
 .volume {
+  margin-top: 0.25rem;
+
   /* Chrome, Safari, Opera, and Edge Chromium */
   &::-webkit-slider-runnable-track {
     background-color: #2a8c1b;

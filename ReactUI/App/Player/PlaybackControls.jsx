@@ -3,19 +3,14 @@ import useRepeatMode from "./useRepeatMode";
 import styles from "./PlaybackControls.module.css";
 
 const IconButton = ({ children, ...props }) => (
-  <button
-    className={`material-symbols-sharp ${styles.button} ${styles.iconButton} `}
-    {...props}
-  >
-    {children}
+  <button className={styles.iconButton} {...props}>
+    <span className="material-symbols-sharp">{children}</span>
   </button>
 );
 
 const ToggleButton = ({ children, enabled, ...props }) => (
   <button
-    className={`${styles.button} ${styles.toggleButton} ${
-      enabled ? styles.enabled : ""
-    }`}
+    className={`${styles.toggleButton} ${enabled ? styles.enabled : ""}`}
     {...props}
   >
     {children}
@@ -27,13 +22,7 @@ const PlayerControls = ({ music }) => {
   const { repeatEnabled, toggleRepeat } = useRepeatMode();
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        margin: "0 0 1em 0",
-      }}
-    >
+    <div className={styles.container}>
       <div className={styles.playbackControls}>
         <IconButton onClick={async () => await music.skipToPreviousItem()}>
           skip_previous

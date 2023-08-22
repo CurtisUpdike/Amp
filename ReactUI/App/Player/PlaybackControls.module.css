@@ -1,18 +1,23 @@
 .iconButton {
-  font-size: 2rem;
-  padding: 0 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & span {
+    font-size: 1.75em;
+  }
 }
 
-.toggleButton {
-  font-size: 12px;
-  font-weight: 800;
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 1em 0;
 }
 
 .toggleButton::before {
-  font-size: 14;
   content: "◼";
   color: #4a5a6b;
-  margin-right: 0.5rem;
+  margin-right: 0.625em;
 }
 
 .enabled::before {
@@ -22,5 +27,5 @@
 .playbackControls {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-column-gap: 0.125rem;
+  grid-column-gap: 0.25rem;
 }

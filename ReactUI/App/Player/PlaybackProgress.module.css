@@ -1,11 +1,13 @@
 .playbackProgress {
   width: 100%;
+  font-size: 20px;
+  padding: 0.5em 0;
 
   /* Chrome, Safari, Opera, and Edge Chromium */
   &::-webkit-slider-runnable-track {
     background: linear-gradient(0.25turn, #1b1931, #262342, #1d1d37);
-    height: 1rem;
-    border-width: 2px;
+    height: 1em;
+    border-width: 0.125em;
     border-style: solid;
     border-top-color: #1c1a32;
     border-left-color: #1c1a32;
@@ -16,10 +18,8 @@
   /* Firefox */
   &::-moz-range-track {
     background: linear-gradient(0.25turn, #1b1931, #262342, #1d1d37);
-    height: 1rem;
-    border-width: 2px;
-    border-style: solid;
-    border-width: 2px;
+    height: 1em;
+    border-width: 0.125em;
     border-style: solid;
     border-top-color: #1c1a32;
     border-left-color: #1c1a32;
@@ -31,20 +31,20 @@
   &::-webkit-slider-thumb {
     -webkit-appearance: none; /* Override default look */
     appearance: none;
-    margin-top: -0.125rem; /* Centers thumb on the track */
-    height: 1rem;
-    width: 2rem;
+    margin-top: -0.125em; /* Centers thumb on the track */
+    height: 1em;
+    width: 2em;
     background-color: #755c22;
-    border-width: 0.125rem;
+    border-width: 0.125em;
     border-style: outset;
     border-top-color: #483b26;
     border-right-color: #000;
     border-bottom-color: #000;
     border-left-color: #c9ae64;
     box-shadow:
-      inset 0 0 0 0.2rem #f5e3b3,
-      inset 0 0.3rem #fff,
-      inset 0 -0.3rem #af9960;
+      inset 0 0 0 0.2em #f5e3b3,
+      inset 0 0.3em #fff,
+      inset 0 -0.3em #af9960;
   }
 
   /* Firefox */
@@ -52,19 +52,19 @@
     border: none; /*Removes extra border that FF applies*/
     border-radius: 0; /*Removes default border-radius that FF applies*/
     appearance: none;
-    margin-top: -0.125rem; /* Centers thumb on the track */
-    height: 1rem;
-    width: 2rem;
+    margin-top: -0.125em; /* Centers thumb on the track */
+    height: 1em;
+    width: 2em;
     background-color: #755c22;
-    border-width: 0.125rem;
+    border-width: 0.125em;
     border-style: outset;
     border-top-color: #483b26;
     border-right-color: #000;
     border-bottom-color: #000;
     border-left-color: #c9ae64;
     box-shadow:
-      inset 0 0 0 0.2rem #f5e3b3,
-      inset 0 0.3rem #fff,
-      inset 0 -0.3rem #af9960;
+      inset 0 0 0 0.2em #f5e3b3,
+      inset 0 0.3em #fff,
+      inset 0 -0.3em #af9960;
   }
 }
