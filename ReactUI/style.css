@@ -1,0 +1,73 @@
+/* Resets */
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+}
+
+/* Styles */
+html,
+body {
+  background: #38365d;
+  min-width: 100%;
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+}
+
+:root {
+  --font-color-primary: #fff;
+  --font-color-secondary: #35f22e;
+  --app-background: linear-gradient(0.25turn, #151521, #302e4b, #1e1e2f);
+  --app-border-radius: none;
+  --app-border: 1px outset #0d0d0d;
+  --section-background: linear-gradient(0.25turn, #212132, #383759, #2f2e49);
+  --inset-border-top-color: #1b1b2a;
+  --inset-border-right-color: #59596d;
+  --inset-border-bottom-color: #59596d;
+  --inset-border-left-color: #1b1b2a;
+}
+
+button {
+  font-size: 0.75em;
+  font-weight: 800;
+  background-color: #bdced6;
+  color: #4a5a6b;
+  padding: 0.5em 1em;
+  text-transform: uppercase;
+  border-width: 0.25em;
+  border-style: solid;
+  border-top-color: #adb5c6;
+  border-right-color: #4a5a6b;
+  border-bottom-color: #4a5a6b;
+  border-left-color: #adb5c6;
+  box-shadow:
+    inset 0 0.125em #efffff,
+    inset -0.125em 0 #7b8494,
+    inset 0 -0.125em #7b8494,
+    inset 0.125em 0 #efffff;
+
+  &:active {
+    background-color: #acbcc2;
+    border-style: inset;
+  }
+}

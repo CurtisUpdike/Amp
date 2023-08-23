@@ -1,0 +1,11 @@
+.list {
+  padding: 0.25em 0;
+}
+
+.buttonGroup {
+  padding-top: 0.5rem;
+
+  button:last-child {
+    margin-left: 1rem;
+  }
+}
