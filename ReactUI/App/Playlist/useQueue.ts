@@ -21,18 +21,18 @@ export default function useQueue() {
     setPosition(music.queue.position);
   }
 
-  function moveQueueItem(orignalIndex, targetIndex) {
-    if (orignalIndex === targetIndex) return;
+  // function moveQueueItem(orignalIndex, targetIndex) {
+  //   if (orignalIndex === targetIndex) return;
 
-    const newQueue = Array.from(queue);
-    const [removedItem] = newQueue.splice(orignalIndex, 1);
-    newQueue.splice(targetIndex, 0, removedItem);
+  //   const newQueue = Array.from(queue);
+  //   const [removedItem] = newQueue.splice(orignalIndex, 1);
+  //   newQueue.splice(targetIndex, 0, removedItem);
 
-    // API not currently stable, revisit later
-    const currentItem = music.queue.currentItem;
-    music.queue.updateItems(newQueue);
-    music.queue._updatePosition(music.queue.indexForItem(currentItem));
-  }
+  //   // API not currently stable, revisit later
+  //   const currentItem = music.queue.currentItem;
+  //   music.queue.updateItems(newQueue);
+  //   music.queue._updatePosition(music.queue.indexForItem(currentItem));
+  // }
 
   return { queue, position };
 }

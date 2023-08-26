@@ -1,11 +1,20 @@
-export async function playAtIndex(index) {
+export type MediaItem = {
+  id: string;
+  attributes: {
+    name: string;
+    artistName: string;
+    durationInMillis: number;
+  };
+};
+
+export async function playAtIndex(index: number) {
   const music = window.MusicKit.getInstance();
   await music.stop();
   music.queue.position = index;
   await music.play();
 }
 
-export async function removeItemAtIndex(item, index) {
+export async function removeItemAtIndex(item: MediaItem, index: number) {
   const music = window.MusicKit.getInstance();
 
   const isOnlyItemInQueue = music.queue.items.length === 1;
@@ -15,7 +24,8 @@ export async function removeItemAtIndex(item, index) {
     return;
   }
 
-  const matchItem = (q, i) => q.item.id === item.id && i === index;
+  const matchItem = (q: { item: MediaItem }, i: number): boolean =>
+    q.item.id === item.id && i === index;
 
   const isCurrentlyPlaying = index === music.queue.position;
   if (isCurrentlyPlaying) {

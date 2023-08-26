@@ -1,8 +1,14 @@
-import { playAtIndex, removeItemAtIndex } from "./musicKitHelpers";
+import { MediaItem, playAtIndex, removeItemAtIndex } from "./musicKitHelpers";
 import formatMilliseconds from "../../utils/formatMilliseconds";
 import styles from "./PlaylistItem.module.css";
 
-const PlaylistItem = ({ item, index, isCurrentItem }) => {
+type PlaylistItemProps = {
+  item: MediaItem;
+  index: number;
+  isCurrentItem: boolean;
+};
+
+const PlaylistItem = ({ item, index, isCurrentItem }: PlaylistItemProps) => {
   const {
     attributes: { name, artistName, durationInMillis },
   } = item;
