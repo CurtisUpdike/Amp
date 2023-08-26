@@ -1,4 +1,7 @@
-export default function formatMilliseconds(durationInMillis, seperator = ":") {
+export default function formatMilliseconds(
+  durationInMillis: number,
+  seperator = ":",
+) {
   const millisInOneHour = 3600000;
   const millisInOneMinute = 60000;
   const millisInOneSecond = 1000;
@@ -6,7 +9,7 @@ export default function formatMilliseconds(durationInMillis, seperator = ":") {
   let timeRemaining = durationInMillis;
   const times = [];
 
-  const pad = (d) => (d > 9 ? d : "0" + d.toString());
+  const pad = (d: number) => (d > 9 ? d : "0" + d.toString());
 
   const hours = Math.floor(timeRemaining / millisInOneHour);
   if (hours > 0) times.push(hours);

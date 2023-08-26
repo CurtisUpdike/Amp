@@ -2,7 +2,16 @@ import { playLast, playNext, playNow } from "./musicKitHelpers";
 import formatMilliseconds from "../../utils/formatMilliseconds";
 import styles from "./SongList.module.css";
 
-export default function SongList({ songs }) {
+type Song = {
+  id: number;
+  attributes: {
+    name: string;
+    artistName: string;
+    durationInMillis: number;
+  };
+};
+
+export default function SongList({ songs }: { songs: Song[] }) {
   const songsListItems = songs.map((song) => {
     const {
       attributes: { name, artistName, durationInMillis },

@@ -1,4 +1,8 @@
-export async function playNow(song) {
+type Song = {
+  id: number;
+};
+
+export async function playNow(song: Song) {
   const music = window.MusicKit.getInstance();
   if (music.isPlaying) {
     await music.stop();
@@ -12,7 +16,7 @@ export async function playNow(song) {
   return null;
 }
 
-export async function playNext(song) {
+export async function playNext(song: Song) {
   const music = window.MusicKit.getInstance();
   if (music.queue.isEmpty) {
     playNow(song);
@@ -21,7 +25,7 @@ export async function playNext(song) {
   }
 }
 
-export async function playLast(song) {
+export async function playLast(song: Song) {
   const music = window.MusicKit.getInstance();
   if (music.queue.isEmpty) {
     playNow(song);
@@ -30,7 +34,7 @@ export async function playLast(song) {
   }
 }
 
-export async function search(query) {
+export async function search(query: string) {
   const music = window.MusicKit.getInstance();
   query = query.trim();
 

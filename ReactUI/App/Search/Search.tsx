@@ -18,9 +18,10 @@ export default function Search() {
   }, [query]);
 
   const handleSearchChange = useCallback(
-    debounce((e) => {
-      setQuery(e.target.value);
-    }),
+    () =>
+      debounce((e) => {
+        setQuery(e.target.value);
+      }),
     [],
   );
 
