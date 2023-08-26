@@ -1,6 +1,6 @@
 import styles from "./Heading.module.css";
 
-const Heading = ({ children }) => (
+const Heading = ({ children }: { children: string }) => (
   <div className={styles.heading}>
     <div className={styles.bannerBorder}>
       <div className={styles.banner} />

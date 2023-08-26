@@ -1,10 +1,11 @@
-import React from "react";
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
 import "./style.css";
 
 declare global {
   interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     MusicKit: any;
   }
 }
@@ -29,7 +30,11 @@ async function main() {
       },
     });
 
-    root.render(<React.StrictMode><App /></React.StrictMode>);
+    root.render(
+      <StrictMode>
+        <App />
+      </StrictMode>,
+    );
   } catch (err) {
     console.error(err);
   }
