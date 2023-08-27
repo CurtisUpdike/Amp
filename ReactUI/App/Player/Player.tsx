@@ -4,10 +4,11 @@ import PlaybackControls from "./PlaybackControls";
 import VolumeControls from "./VolumeControls";
 import NowPlayingDisplay from "./NowPlayingDisplay";
 import Section from "../../components/Section";
+import { MusicKitInstance } from "../../types/MusicKitTypes";
 
 export default function Player() {
   const MusicKit = window.MusicKit;
-  const music = MusicKit.getInstance();
+  const music: MusicKitInstance = MusicKit.getInstance();
   const [playbackDuration, setPlaybackDuration] = useState(
     music.currentPlaybackDuration,
   );
@@ -38,7 +39,13 @@ export default function Player() {
         queueIsEmpty={music.queueIsEmpty}
       />
       <PlaybackProgress playbackDuration={playbackDuration} />
-      <PlaybackControls music={music} />
+      <PlaybackControls
+        skipPrevious={async () => await music.skipToPreviousItem()}
+        play={async () => await music.play()}
+        pause={async () => await music.pause()}
+        stop={async () => await music.stop()}
+        skipNext={async () => await music.skipToNextItem()}
+      />
       <VolumeControls />
     </Section>
   );

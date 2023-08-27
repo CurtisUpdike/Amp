@@ -1,7 +1,8 @@
+import { MusicKitInstance } from "../../types/MusicKitTypes";
 import { useEffect, useState } from "react";
 
 export default function useAutoplay() {
-  const music = window.MusicKit.getInstance();
+  const music: MusicKitInstance = window.MusicKit.getInstance();
   const [autoplayEnabled, setAutoplayEnabled] = useState(music.autoplayEnabled);
 
   useEffect(() => {

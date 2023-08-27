@@ -1,9 +1,14 @@
 import { useState, useEffect } from "react";
+import { MusicKitInstance } from "../../types/MusicKitTypes";
 import styles from "./PlaybackProgress.module.css";
 
-const PlaybackProgress = ({ playbackDuration }) => {
+const PlaybackProgress = ({
+  playbackDuration,
+}: {
+  playbackDuration: number;
+}) => {
   const MusicKit = window.MusicKit;
-  const music = MusicKit.getInstance();
+  const music: MusicKitInstance = MusicKit.getInstance();
   const [state, setState] = useState("released");
   const [playbackTime, setPlabackTime] = useState(music.currentPlaybackTime);
   const [playbackState, setPlaybackState] = useState(
@@ -46,7 +51,7 @@ const PlaybackProgress = ({ playbackDuration }) => {
         value={state === "dragging" ? value : playbackTime}
         onChange={(e) => {
           if (state === "dragging") {
-            setValue(e.target.value);
+            setValue(Number(e.target.value));
           }
         }}
         onMouseDown={() => {

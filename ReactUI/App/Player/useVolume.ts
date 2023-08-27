@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import { MusicKitInstance } from "../../types/MusicKitTypes";
 
 export default function useVolume() {
-  const music = window.MusicKit.getInstance();
+  const music: MusicKitInstance = window.MusicKit.getInstance();
   const [volume, setVolume] = useState(music.volume);
   const [muted, setMuted] = useState(music.volume === 0);
 
@@ -17,7 +18,7 @@ export default function useVolume() {
     setMuted(music.volume === 0);
   }
 
-  function changeVolume(newVolume) {
+  function changeVolume(newVolume: number) {
     if (newVolume > 1) newVolume = 1;
     if (newVolume <= 0.01) newVolume = 0;
     music.volume = newVolume;

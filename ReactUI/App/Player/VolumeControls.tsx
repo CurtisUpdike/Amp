@@ -15,7 +15,7 @@ const VolumeControls = () => {
           max="1"
           step="0.01"
           value={volume}
-          onChange={(e) => setVolume(e.target.value)}
+          onChange={(e) => setVolume(Number(e.target.value))}
         />
       </label>
     </div>
