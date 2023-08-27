@@ -35,9 +35,52 @@ export interface MediaItem {
   id: string;
 }
 
+export interface Queue {
+  currentItem: MediaItem;
+  isEmpty: boolean;
+  items: MediaItem[];
+  length: number;
+  nextPlayableItem: MediaItem;
+  position: number;
+  previousPlayableItem: MediaItem;
+}
+
+export interface QueueOptions {
+  album?: string;
+  albums?: string[];
+  playlist?: string;
+  playlists?: string[];
+  song?: string;
+  songs?: string[];
+  url?: string;
+  repeatMode?: PlayerRepeatMode;
+  startPlaying?: boolean;
+  startTime?: number;
+}
+
+interface MusicKitAPI {
+  music(
+    path: "/v1/catalog/{{storefrontId}}/search",
+    queryParameters: {
+      term: string;
+      types: ("songs" | "albums" | "playlists")[];
+      l: string;
+      limit: number; // max is 25
+    },
+  ): Promise<{
+    data: {
+      results: {
+        songs: {
+          data: MediaItem[];
+        };
+      };
+    };
+  }>;
+}
+
 export interface MusicKitInstance {
   // Properties
-  // api: MusicKitAPI;
+  api: MusicKitAPI;
   autoplayEnabled: boolean;
   bitrate: PlaybackBitrate;
   previewOnly: boolean;
@@ -59,7 +102,7 @@ export interface MusicKitInstance {
   nowPlayingItemIndex: number;
   playbackRate: number;
   playbackState: PlaybackStates;
-  // queue: Queue;
+  queue: Queue;
   storefrontCountryCode: string;
   storefrontId: string;
 
@@ -68,20 +111,20 @@ export interface MusicKitInstance {
   authorize(): Promise<string | void>;
   changeToMediaItem(descriptor: MediaItem | string): Promise<void>;
   changeUserStorefront(storefrontId: string): Promise<void>;
-  // clearQueue(): Promise<Queue>
+  clearQueue(): Promise<Queue>;
   exitFullscreen(): Promise<void>;
   mute(): void;
   pause(): Promise<void>;
   play(): Promise<void>;
-  // playAt(position: Number, options: QueueOptions): Promise<Queue | void>
-  // playLater(options: QueueOptions): Promise<Queue | void>
-  // playNext(options: QueueOptions, clear?: Boolean): Promise<Queue | void>
+  playAt(position: number, options: QueueOptions): Promise<Queue | void>;
+  playLater(options: QueueOptions): Promise<Queue | void>;
+  playNext(options: QueueOptions, clear?: boolean): Promise<Queue | void>;
   removeEventListener(name: string, callback: () => void): void;
   requestFullscreen(element: HTMLElement): Promise<void>;
   seekBackward(): Promise<void>;
   seekForward(): Promise<void>;
   seekToTime(time: number): Promise<void>;
-  // setQueue(options: QueueOptions): Promise<Queue | void>
+  setQueue(options: QueueOptions): Promise<Queue | void>;
   skipToNextItem(): Promise<void>;
   skipToPreviousItem(): Promise<void>;
   stop(): Promise<void>;

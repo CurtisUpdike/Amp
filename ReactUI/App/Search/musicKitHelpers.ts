@@ -1,9 +1,7 @@
-type Song = {
-  id: number;
-};
+import { MusicKitInstance, MediaItem } from "../../types/MusicKitTypes";
 
-export async function playNow(song: Song) {
-  const music = window.MusicKit.getInstance();
+export async function playNow(song: MediaItem) {
+  const music: MusicKitInstance = window.MusicKit.getInstance();
   if (music.isPlaying) {
     await music.stop();
   }
@@ -13,11 +11,10 @@ export async function playNow(song: Song) {
     await music.playNext({ song: song.id });
     await music.skipToNextItem();
   }
-  return null;
 }
 
-export async function playNext(song: Song) {
-  const music = window.MusicKit.getInstance();
+export async function playNext(song: MediaItem) {
+  const music: MusicKitInstance = window.MusicKit.getInstance();
   if (music.queue.isEmpty) {
     playNow(song);
   } else {
@@ -25,8 +22,8 @@ export async function playNext(song: Song) {
   }
 }
 
-export async function playLast(song: Song) {
-  const music = window.MusicKit.getInstance();
+export async function playLast(song: MediaItem) {
+  const music: MusicKitInstance = window.MusicKit.getInstance();
   if (music.queue.isEmpty) {
     playNow(song);
   } else {
@@ -34,8 +31,8 @@ export async function playLast(song: Song) {
   }
 }
 
-export async function search(query: string) {
-  const music = window.MusicKit.getInstance();
+export async function search(query: string): Promise<{ songs: MediaItem[] }> {
+  const music: MusicKitInstance = window.MusicKit.getInstance();
   query = query.trim();
 
   if (query.length === 0) return { songs: [] };
@@ -59,9 +56,7 @@ export async function search(query: string) {
       },
     } = response;
 
-    console.log(songs);
-
-    return { songs };
+    return { songs: songs.map((s) => new window.MusicKit.MediaItem(s)) };
   } catch {
     return { songs: [] };
   }
