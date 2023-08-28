@@ -1,7 +1,8 @@
+import { MusicKitInstance } from "../../types/MusicKitTypes";
 import { useEffect, useState } from "react";
 
 export default function useRepeatMode() {
-  const music = window.MusicKit.getInstance();
+  const music: MusicKitInstance = window.MusicKit.getInstance();
   const [repeatEnabled, setRepeatEnabled] = useState(music.repeatMode === 2);
 
   useEffect(() => {
@@ -12,7 +13,7 @@ export default function useRepeatMode() {
   });
 
   function handleRepeatModeChange() {
-    setRepeatEnabled(music.repeatMode);
+    setRepeatEnabled(music.repeatMode === 2);
   }
 
   function toggleRepeat() {

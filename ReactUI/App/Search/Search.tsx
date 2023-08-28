@@ -1,6 +1,6 @@
-import { useEffect, useState, useCallback } from "react";
+import { FormEvent, useEffect, useState } from "react";
+import { MediaItem } from "../../types/MusicKitTypes";
 import { search } from "./musicKitHelpers";
-import debounce from "../../utils/debounce";
 import Section from "../../components/Section";
 import SongList from "./SongList";
 import Scrollbox from "../../components/Scrollbox";
@@ -8,7 +8,8 @@ import styles from "./Search.module.css";
 
 export default function Search() {
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState([]);
+  const initialResults: MediaItem[] = [];
+  const [results, setResults] = useState(initialResults);
 
   useEffect(() => {
     (async () => {
@@ -17,18 +18,8 @@ export default function Search() {
     })();
   }, [query]);
 
-  const handleSearchChange = useCallback(
-    debounce((e) => {
-      setQuery(e.target.value);
-    }),
-    [],
-  );
-
-  let content;
-  if (query.length > 0 && results.length > 0) {
-    content = <SongList songs={results} />;
-  } else {
-    content = null;
+  function handleSearchChange(event: FormEvent<HTMLInputElement>) {
+    setQuery((event.target as HTMLInputElement).value);
   }
 
   return (
@@ -40,7 +31,9 @@ export default function Search() {
           onChange={handleSearchChange}
         />
       </label>
-      <Scrollbox>{content}</Scrollbox>
+      <Scrollbox>
+        {query.length > 0 && results.length > 0 && <SongList songs={results} />}
+      </Scrollbox>
     </Section>
   );
 }

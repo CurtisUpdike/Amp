@@ -1,11 +1,16 @@
-import { playAtIndex, removeItemAtIndex } from "./musicKitHelpers";
+import { MediaItem } from "../../types/MusicKitTypes";
+import { playAtIndex, removeAtIndex } from "./musicKitHelpers";
 import formatMilliseconds from "../../utils/formatMilliseconds";
 import styles from "./PlaylistItem.module.css";
 
-const PlaylistItem = ({ item, index, isCurrentItem }) => {
-  const {
-    attributes: { name, artistName, durationInMillis },
-  } = item;
+type Props = {
+  item: MediaItem;
+  index: number;
+  isCurrentItem: boolean;
+};
+
+const PlaylistItem = ({ item, index, isCurrentItem }: Props) => {
+  const { title, artistName, playbackDuration } = item;
 
   return (
     <li
@@ -13,13 +18,14 @@ const PlaylistItem = ({ item, index, isCurrentItem }) => {
       onDoubleClick={() => playAtIndex(index)}
     >
       <div className={styles.container}>
-        <span className={styles.info}>{`${name} — ${artistName}`}</span>
+        <span className={styles.info}>{`${title} — ${artistName}`}</span>
         <span className={styles.duration}>
-          {formatMilliseconds(durationInMillis)}
+          {formatMilliseconds(playbackDuration)}
         </span>
         <button
           className="material-symbols-sharp"
-          onClick={() => removeItemAtIndex(item, index)}
+          onClick={() => removeAtIndex(index)}
+          disabled={isCurrentItem}
         >
           playlist_remove
         </button>

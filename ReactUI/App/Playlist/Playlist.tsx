@@ -1,3 +1,4 @@
+import { MediaItem } from "../../types/MusicKitTypes";
 import { toggleShuffle, clearQueue } from "./musicKitHelpers";
 import PlaylistItem from "./PlaylistItem";
 import Section from "../../components/Section";
@@ -12,7 +13,7 @@ function Playlist() {
     <Section>
       <Scrollbox>
         <ol className={styles.list}>
-          {queue.map((item, index) => (
+          {queue.map((item: MediaItem, index: number) => (
             <PlaylistItem
               key={index}
               item={item}

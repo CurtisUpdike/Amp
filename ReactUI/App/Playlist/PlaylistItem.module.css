@@ -50,5 +50,9 @@
       background-color: #000;
       color: greenyellow;
     }
+
+    &:disabled {
+      visibility: hidden;
+    }
   }
 }

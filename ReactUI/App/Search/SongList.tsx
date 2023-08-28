@@ -1,12 +1,11 @@
+import { MediaItem } from "../../types/MusicKitTypes";
 import { playLast, playNext, playNow } from "./musicKitHelpers";
 import formatMilliseconds from "../../utils/formatMilliseconds";
 import styles from "./SongList.module.css";
 
-export default function SongList({ songs }) {
+export default function SongList({ songs }: { songs: MediaItem[] }) {
   const songsListItems = songs.map((song) => {
-    const {
-      attributes: { name, artistName, durationInMillis },
-    } = song;
+    const { title, artistName, playbackDuration } = song;
 
     return (
       <li
@@ -14,9 +13,9 @@ export default function SongList({ songs }) {
         className={styles.item}
         onDoubleClick={() => playNow(song)}
       >
-        <span className={styles.info}>{`${name} — ${artistName}`}</span>
+        <span className={styles.info}>{`${title} — ${artistName}`}</span>
         <span className={styles.duration}>
-          {formatMilliseconds(durationInMillis)}
+          {formatMilliseconds(playbackDuration)}
         </span>
         <div className={styles.fade} />
         <button
