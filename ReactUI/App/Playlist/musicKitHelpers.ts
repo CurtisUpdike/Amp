@@ -1,4 +1,4 @@
-import { MediaItem, MusicKitInstance } from "../../types/MusicKitTypes";
+import { MusicKitInstance } from "../../types/MusicKitTypes";
 
 export async function playAtIndex(index: number) {
   const music: MusicKitInstance = window.MusicKit.getInstance();
@@ -7,7 +7,7 @@ export async function playAtIndex(index: number) {
   await music.play();
 }
 
-export async function removeItemAtIndex(item: MediaItem, index: number) {
+export async function removeAtIndex(index: number) {
   const music: MusicKitInstance = window.MusicKit.getInstance();
   if (index === music.queue.position) {
     return;

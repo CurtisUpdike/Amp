@@ -41,32 +41,30 @@ const PlaybackProgress = ({
     ) || music.queueIsEmpty;
 
   return (
-    <>
-      <input
-        className={styles.playbackProgress}
-        disabled={isDisabled}
-        type="range"
-        min="0"
-        max={playbackDuration}
-        value={state === "dragging" ? value : playbackTime}
-        onChange={(e) => {
-          if (state === "dragging") {
-            setValue(Number(e.target.value));
-          }
-        }}
-        onMouseDown={() => {
-          setValue(playbackTime);
-          setState("dragging");
-        }}
-        onMouseUp={async (e) => {
-          if (playbackState === "stopped") {
-            await music.play();
-          }
-          await music.seekToTime(e.target.value);
-          setTimeout(() => setState("released"), 100);
-        }}
-      />
-    </>
+    <input
+      className={styles.playbackProgress}
+      disabled={isDisabled}
+      type="range"
+      min="0"
+      max={playbackDuration}
+      value={state === "dragging" ? value : playbackTime}
+      onChange={(e) => {
+        if (state === "dragging") {
+          setValue(Number(e.target.value));
+        }
+      }}
+      onMouseDown={() => {
+        setValue(playbackTime);
+        setState("dragging");
+      }}
+      onMouseUp={async (e) => {
+        if (playbackState === "stopped") {
+          await music.play();
+        }
+        await music.seekToTime(Number((e.target as HTMLInputElement).value));
+        setTimeout(() => setState("released"), 100);
+      }}
+    />
   );
 };
 

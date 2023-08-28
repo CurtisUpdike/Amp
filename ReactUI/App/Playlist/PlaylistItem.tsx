@@ -1,5 +1,5 @@
 import { MediaItem } from "../../types/MusicKitTypes";
-import { playAtIndex, removeItemAtIndex } from "./musicKitHelpers";
+import { playAtIndex, removeAtIndex } from "./musicKitHelpers";
 import formatMilliseconds from "../../utils/formatMilliseconds";
 import styles from "./PlaylistItem.module.css";
 
@@ -24,7 +24,7 @@ const PlaylistItem = ({ item, index, isCurrentItem }: Props) => {
         </span>
         <button
           className="material-symbols-sharp"
-          onClick={() => removeItemAtIndex(item, index)}
+          onClick={() => removeAtIndex(index)}
           disabled={isCurrentItem}
         >
           playlist_remove

@@ -1,4 +1,5 @@
-import { toggleShuffle, clearQueue, MediaItem } from "./musicKitHelpers";
+import { MediaItem } from "../../types/MusicKitTypes";
+import { toggleShuffle, clearQueue } from "./musicKitHelpers";
 import PlaylistItem from "./PlaylistItem";
 import Section from "../../components/Section";
 import Scrollbox from "../../components/Scrollbox";
