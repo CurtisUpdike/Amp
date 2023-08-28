@@ -1,38 +1,37 @@
 import { useState, useEffect } from "react";
+import { MusicKitInstance } from "../../types/MusicKitTypes";
 
 export default function useQueue() {
-  const MusicKit = window.MusicKit;
-  const music = MusicKit.getInstance();
-  const [queue, setQueue] = useState(music.queue.items);
-  const [position, setPosition] = useState(music.queue.position);
+  const music: MusicKitInstance = window.MusicKit.getInstance();
+  const musicQueue = {
+    get items() {
+      return music.queue.userAddedItems;
+    },
+    get position() {
+      return music.queue.position;
+    },
+  };
+
+  const [queue, setQueue] = useState(musicQueue.items);
+  const [position, setPosition] = useState(musicQueue.position);
 
   useEffect(() => {
-    music.addEventListener("queueItemsDidChange", updateQueue);
-    music.addEventListener("queuePositionDidChange", updateQueue);
+    music.addEventListener("queueItemsDidChange", updateQueueItems);
+    music.addEventListener("queuePositionDidChange", updateQueuePosition);
 
     return () => {
-      music.removeEventListener("queueItemsDidChange", updateQueue);
-      music.removeEventListener("queuePositionDidChange", updateQueue);
+      music.removeEventListener("queueItemsDidChange", updateQueueItems);
+      music.removeEventListener("queuePositionDidChange", updateQueuePosition);
     };
   });
 
-  function updateQueue() {
-    setQueue(music.queue.items);
-    setPosition(music.queue.position);
+  function updateQueueItems() {
+    setQueue(musicQueue.items);
   }
 
-  // function moveQueueItem(orignalIndex, targetIndex) {
-  //   if (orignalIndex === targetIndex) return;
-
-  //   const newQueue = Array.from(queue);
-  //   const [removedItem] = newQueue.splice(orignalIndex, 1);
-  //   newQueue.splice(targetIndex, 0, removedItem);
-
-  //   // API not currently stable, revisit later
-  //   const currentItem = music.queue.currentItem;
-  //   music.queue.updateItems(newQueue);
-  //   music.queue._updatePosition(music.queue.indexForItem(currentItem));
-  // }
+  function updateQueuePosition() {
+    setPosition(musicQueue.position);
+  }
 
   return { queue, position };
 }

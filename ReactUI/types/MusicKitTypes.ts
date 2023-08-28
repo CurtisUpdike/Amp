@@ -35,6 +35,11 @@ export interface MediaItem {
   id: string;
 }
 
+export interface QueueItem {
+  isAutoplay: boolean;
+  item: MediaItem;
+}
+
 export interface Queue {
   currentItem: MediaItem;
   isEmpty: boolean;
@@ -43,6 +48,14 @@ export interface Queue {
   nextPlayableItem: MediaItem;
   position: number;
   previousPlayableItem: MediaItem;
+
+  // Undocumented API
+  _queueItems: QueueItem[];
+  removeQueueItems(fn: (queueItem: QueueItem, index: number) => boolean): void;
+  userAddedItems: MediaItem[];
+
+  // WARNING: Deprecated API
+  remove(index: number): void;
 }
 
 export interface QueueOptions {
