@@ -1,0 +1,35 @@
+.login {
+  /* background-color: aqua; */
+  color: var(--font-color-primary);
+  font-size: 0.875em;
+  text-align: center;
+}
+
+.login button {
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+  border: none;
+  font-size: inherit;
+  font-weight: inherit;
+  text-transform: none;
+  background: none;
+}
+
+.login button:active {
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+  border: none;
+  font-size: inherit;
+  font-weight: inherit;
+  text-transform: none;
+  background: none;
+}
+
+.login a,
+.login button {
+  color: #35f22e;
+  text-decoration: underline;
+  cursor: pointer;
+}
