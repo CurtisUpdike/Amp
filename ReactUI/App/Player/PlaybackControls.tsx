@@ -47,19 +47,19 @@ const PlayerControls = ({
     <div className={styles.container}>
       <div className={styles.playbackControls}>
         <button className={styles.iconButton} onClick={skipPrevious}>
-          <span className="material-symbols-sharp">skip_previous</span>
+          <span className="material-icon">skip_previous</span>
         </button>
         <button className={styles.iconButton} onClick={play}>
-          <span className="material-symbols-sharp">play_arrow</span>
+          <span className="material-icon">play_arrow</span>
         </button>
         <button className={styles.iconButton} onClick={pause}>
-          <span className="material-symbols-sharp">pause</span>
+          <span className="material-icon">pause</span>
         </button>
         <button className={styles.iconButton} onClick={stop}>
-          <span className="material-symbols-sharp">stop</span>
+          <span className="material-icon">stop</span>
         </button>
         <button className={styles.iconButton} onClick={skipNext}>
-          <span className="material-symbols-sharp">skip_next</span>
+          <span className="material-icon">skip_next</span>
         </button>
       </div>
       <AutoplayButton />

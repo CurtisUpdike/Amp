@@ -23,7 +23,7 @@ const PlaylistItem = ({ item, index, isCurrentItem }: Props) => {
           {formatMilliseconds(playbackDuration)}
         </span>
         <button
-          className="material-symbols-sharp"
+          className="material-icon"
           onClick={() => removeAtIndex(index)}
           disabled={isCurrentItem}
         >

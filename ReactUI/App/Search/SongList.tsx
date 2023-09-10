@@ -18,16 +18,10 @@ export default function SongList({ songs }: { songs: MediaItem[] }) {
           {formatMilliseconds(playbackDuration)}
         </span>
         <div className={styles.fade} />
-        <button
-          className="material-symbols-sharp"
-          onClick={() => playNext(song)}
-        >
+        <button className="material-icon" onClick={() => playNext(song)}>
           playlist_play
         </button>
-        <button
-          className="material-symbols-sharp"
-          onClick={() => playLast(song)}
-        >
+        <button className="material-icon" onClick={() => playLast(song)}>
           playlist_add
         </button>
       </li>
