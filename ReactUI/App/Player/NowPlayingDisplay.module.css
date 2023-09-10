@@ -5,4 +5,9 @@
   background-color: #000;
   border: 2px inset black;
   color: var(--font-color-secondary);
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
 }
