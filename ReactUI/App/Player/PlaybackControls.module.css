@@ -1,31 +1,48 @@
-.iconButton {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  & span {
-    font-size: 1.75em;
-  }
-}
-
 .container {
-  display: flex;
-  justify-content: space-between;
-  margin: 0 0 1em 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  margin-bottom: 1rem;
 }
 
-.toggleButton::before {
-  content: "◼";
+/* Playback Controls */
+.playbackControls {
+  display: inline-block;
+}
+
+.playbackControls button {
   color: #4a5a6b;
-  margin-right: 0.625em;
+  padding: 0.25rem 0.675rem;
 }
 
-.enabled::before {
+.playbackControls button:active {
   color: var(--font-color-secondary);
 }
 
-.playbackControls {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-column-gap: 0.25rem;
+/* Playlist Controls */
+.playlistControls {
+  justify-self: end;
+  align-self: center;
+}
+
+.playlistControls button:last-child {
+  margin-left: 1rem;
+}
+
+/* Toggle Button */
+.toggleButton::before {
+  content: "◼";
+  color: #4a5a6b;
+  margin-right: 0.375rem;
+}
+
+.toggleButton:active:before {
+  color: var(--font-color-secondary);
+}
+
+.toggleButton.enabled::before {
+  color: var(--font-color-secondary);
+}
+
+.toggleButton.enabled:active:before {
+  color: #4a5a6b;
 }

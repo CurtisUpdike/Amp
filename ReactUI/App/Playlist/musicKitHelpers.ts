@@ -12,10 +12,10 @@ export async function removeAtIndex(index: number) {
   if (index === music.queue.position) {
     return;
   }
+  music.queue.remove(index);
   if (index < music.queue.position) {
     music.queue.position -= 1;
   }
-  music.queue.remove(index);
 }
 
 export async function toggleShuffle() {

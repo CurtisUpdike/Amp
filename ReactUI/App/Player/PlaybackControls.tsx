@@ -1,6 +1,7 @@
 import useAutoplay from "./useAutoplay";
 import useRepeatMode from "./useRepeatMode";
 import styles from "./PlaybackControls.module.css";
+import IconButton from "../../components/IconButton";
 
 function AutoplayButton() {
   const { autoplayEnabled, toggleAutoplay } = useAutoplay();
@@ -46,24 +47,42 @@ const PlayerControls = ({
   return (
     <div className={styles.container}>
       <div className={styles.playbackControls}>
-        <button className={styles.iconButton} onClick={skipPrevious}>
-          <span className="material-symbols-sharp">skip_previous</span>
-        </button>
-        <button className={styles.iconButton} onClick={play}>
-          <span className="material-symbols-sharp">play_arrow</span>
-        </button>
-        <button className={styles.iconButton} onClick={pause}>
-          <span className="material-symbols-sharp">pause</span>
-        </button>
-        <button className={styles.iconButton} onClick={stop}>
-          <span className="material-symbols-sharp">stop</span>
-        </button>
-        <button className={styles.iconButton} onClick={skipNext}>
-          <span className="material-symbols-sharp">skip_next</span>
-        </button>
+        <IconButton
+          iconName="skip_previous"
+          ariaLabel="Play previous song"
+          tooltipText="Skip backward"
+          onClick={skipPrevious}
+        />
+        <IconButton
+          iconName="play_arrow"
+          ariaLabel="Play"
+          tooltipText="Play"
+          onClick={play}
+        />
+        <IconButton
+          iconName="pause"
+          ariaLabel="Pause playback"
+          tooltipText="Pause"
+          onClick={pause}
+        />
+
+        <IconButton
+          iconName="stop"
+          ariaLabel="Stop playback"
+          tooltipText="Stop"
+          onClick={stop}
+        />
+        <IconButton
+          iconName="skip_next"
+          ariaLabel="Play next song"
+          tooltipText="Skip forward"
+          onClick={skipNext}
+        />
       </div>
-      <AutoplayButton />
-      <RepeatButton />
+      <div className={styles.playlistControls}>
+        <AutoplayButton />
+        <RepeatButton />
+      </div>
     </div>
   );
 };

@@ -15,7 +15,11 @@ const NowPlayingDisplay = ({ nowPlayingItem, queueIsEmpty }: Props) => {
     content = title + " - " + artistName;
   }
 
-  return <div className={styles.container}>{content}</div>;
+  return (
+    <div className={styles.container} title={content}>
+      {content}
+    </div>
+  );
 };
 
 export default NowPlayingDisplay;
