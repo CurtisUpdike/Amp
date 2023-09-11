@@ -2,6 +2,7 @@ import { MediaItem } from "../../types/MusicKitTypes";
 import { playLast, playNext, playNow } from "./musicKitHelpers";
 import formatMilliseconds from "../../utils/formatMilliseconds";
 import styles from "./SongList.module.css";
+import IconButton from "../../components/IconButton";
 
 export default function SongList({ songs }: { songs: MediaItem[] }) {
   const songsListItems = songs.map((song) => {
@@ -18,12 +19,18 @@ export default function SongList({ songs }: { songs: MediaItem[] }) {
           {formatMilliseconds(playbackDuration)}
         </span>
         <div className={styles.fade} />
-        <button className="material-icon" onClick={() => playNext(song)}>
-          playlist_play
-        </button>
-        <button className="material-icon" onClick={() => playLast(song)}>
-          playlist_add
-        </button>
+        <IconButton
+          iconName="playlist_play"
+          ariaLabel={`Play ${title} next`}
+          tooltipText="Play next"
+          onClick={() => playNext(song)}
+        />
+        <IconButton
+          iconName="playlist_add"
+          ariaLabel={`Play ${title} last in playlist`}
+          tooltipText="Play last"
+          onClick={() => playLast(song)}
+        />
       </li>
     );
   });

@@ -2,6 +2,7 @@ import { MediaItem } from "../../types/MusicKitTypes";
 import { playAtIndex, removeAtIndex } from "./musicKitHelpers";
 import formatMilliseconds from "../../utils/formatMilliseconds";
 import styles from "./PlaylistItem.module.css";
+import IconButton from "../../components/IconButton";
 
 type Props = {
   item: MediaItem;
@@ -26,9 +27,18 @@ const PlaylistItem = ({ item, index, isCurrentItem }: Props) => {
           className="material-icon"
           onClick={() => removeAtIndex(index)}
           disabled={isCurrentItem}
+          aria-label={`Remove ${title} from playlist`}
+          title="Remove"
         >
-          playlist_remove
+          <span aria-hidden="true">playlist_remove</span>
         </button>
+        <IconButton
+          iconName="playlist_remove"
+          ariaLabel={`Remove ${title} from playlist`}
+          tooltipText="Remove"
+          onClick={() => removeAtIndex(index)}
+          disabled={isCurrentItem}
+        />
       </div>
     </li>
   );
