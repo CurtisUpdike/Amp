@@ -11,8 +11,14 @@ export default function LoginBanner({ login }: Props) {
       <div className={styles.login}>
         Playback is limited to 30 seconds.{" "}
         <button onClick={() => login()}>Log in</button> or{" "}
-        <a href="https://www.apple.com/apple-music/">Sign up</a> for the full
-        experience.
+        <a
+          href="https://www.apple.com/apple-music/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Sign up
+        </a>{" "}
+        for the full experience.
       </div>
     </Section>
   );
