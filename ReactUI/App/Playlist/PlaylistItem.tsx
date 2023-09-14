@@ -23,15 +23,6 @@ const PlaylistItem = ({ item, index, isCurrentItem }: Props) => {
         <span className={styles.duration}>
           {formatMilliseconds(playbackDuration)}
         </span>
-        <button
-          className="material-icon"
-          onClick={() => removeAtIndex(index)}
-          disabled={isCurrentItem}
-          aria-label={`Remove ${title} from playlist`}
-          title="Remove"
-        >
-          <span aria-hidden="true">playlist_remove</span>
-        </button>
         <IconButton
           iconName="playlist_remove"
           ariaLabel={`Remove ${title} from playlist`}
